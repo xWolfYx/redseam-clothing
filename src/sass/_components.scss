@@ -1,3 +1,36 @@
+@use "_colors";
+
+.product-list-header {
+  font-family: "Poppins";
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.list-info-container {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.display-info {
+  color: colors.$dark-blue-secondary;
+}
+
+.filter-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sort-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
 .product-card {
   display: flex;
   flex-flow: column nowrap;
