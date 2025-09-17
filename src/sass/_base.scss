@@ -19,6 +19,10 @@
     Cantarell,
     "Open Sans",
     sans-serif;
-  padding: 10px 100px;
   color: colors.$dark-blue-primary;
+}
+
+.main-container {
+  padding: 10px 100px;
+  margin-top: 72px;
 }
