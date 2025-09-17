@@ -1,10 +1,12 @@
 @use "_colors";
 
 .product-list-header {
-  font-family: "Poppins";
   display: flex;
   justify-content: space-between;
   margin-bottom: 32px;
+  & > h1 {
+    font-weight: 600;
+  }
 }
 
 .list-info-container {
@@ -35,7 +37,6 @@
   display: flex;
   flex-flow: column nowrap;
   gap: 12px;
-  font-family: "Poppins";
   text-transform: capitalize;
   font-size: 18px;
 }
@@ -43,4 +44,32 @@
 .cover-img {
   width: 100%;
   border-radius: 10px;
+}
+
+// Pagination
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 90px;
+  margin-bottom: 216px;
+  gap: 8px;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid colors.$grey;
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+.page.active {
+  opacity: 1;
+  border-color: colors.$red;
+  color: colors.$red;
 }
