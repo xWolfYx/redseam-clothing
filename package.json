@@ -20,6 +20,7 @@
   "homepage": "https://github.com/xWolfYx/redseam-clothing#readme",
   "devDependencies": {
     "@awmottaz/prettier-plugin-void-html": "^1.9.0",
+    "@parcel/transformer-sass": "^2.15.4",
     "parcel": "^2.15.4"
   }
 }
