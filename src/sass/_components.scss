@@ -1,0 +1,13 @@
+.product-card {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 12px;
+  font-family: "Poppins";
+  text-transform: capitalize;
+  font-size: 18px;
+}
+
+.cover-img {
+  width: 100%;
+  border-radius: 10px;
+}
