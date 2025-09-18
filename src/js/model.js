@@ -46,48 +46,53 @@ export async function login(credentials) {
   }
 }
 
-// export async function register(credentials) {
-//   try {
-//     // Check user credentials
-//     const { email, password } = credentials;
-//     const loginRequest = await fetch(`${API_URL}/login`, {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ email, password }),
-//     });
+export async function register(credentials) {
+  try {
+    // Check user credentials
+    const { email, password, password_confirmation, username } = credentials;
+    const loginRequest = await fetch(`${API_URL}/register`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        password_confirmation,
+        username,
+      }),
+    });
 
-//     // Failure
-//     if (!loginRequest.ok) {
-//       throw new Error("Wrong credentials!");
-//     }
+    // Failure
+    if (!loginRequest.ok) {
+      throw new Error("Wrong credentials!");
+    }
 
-//     // Success
-//     const userInfo = await loginRequest.json();
+    // Success
+    const userInfo = await loginRequest.json();
 
-//     console.log(userInfo);
-//     console.log(userInfo.token);
+    console.log(userInfo);
+    console.log(userInfo.token);
 
-//     localStorage.setItem("redberryAuthentication", userInfo.token);
-//     return userInfo.token;
-//   } catch (err) {
-//     console.log(err.message);
-//   }
-// }
+    localStorage.setItem("redberryAuthentication", userInfo.token);
+    return userInfo.token;
+  } catch (err) {
+    console.log(err.message);
+  }
+}
 
-// export async function fetchProducts() {
-//   const data = await fetch(`${API_URL}/products`, {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//     },
-//   });
+export async function fetchProducts() {
+  const data = await fetch(`${API_URL}/products`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
 
-//   const response = await data.json();
-//   return response;
-// }
+  const response = await data.json();
+  return response;
+}
 
 // const shopList = document.querySelector(".shop-list");
 
