@@ -60,7 +60,7 @@ class PreLoginView extends View {
     const navContainer = document.querySelector(".nav-container");
     if (location.hash === "#login" || location.hash === "")
       navContainer.innerHTML = `
-    <img src="${icon.union} class="header-login-icon">
+    <img src="${icon.union}" class="header-login-icon">
     <p>Log in</p>`;
   }
 }
