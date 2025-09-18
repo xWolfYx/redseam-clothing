@@ -5,7 +5,8 @@ export const state = {
 };
 
 function checkToken() {
-  return localStorage.getItem("redberryAuthentication") ? true : false;
+  // return localStorage.getItem("redberryAuthentication") ? true : false;
+  return true;
 }
 
 /*
@@ -35,9 +36,6 @@ export async function login(credentials) {
 
     // Success
     const userInfo = await loginRequest.json();
-
-    console.log(userInfo);
-    console.log(userInfo.token);
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
     return userInfo.token;
@@ -83,14 +81,14 @@ export async function register(credentials) {
 }
 
 export async function fetchProducts() {
-  const data = await fetch(`${API_URL}/products`, {
+  const res = await fetch(`${API_URL}/products`, {
     method: "GET",
     headers: {
       Accept: "application/json",
     },
   });
 
-  const response = await data.json();
+  const response = await res.json();
   return response;
 }
 

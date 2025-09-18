@@ -3,13 +3,19 @@
 import * as model from "./model.js";
 import preLoginView from "./views/preLoginView.js";
 // import View from "./views/view.js";
-// import itemsView from "./views/itemsView.js";
+import productsView from "./views/productsView.js";
 
 function controlForm() {
   const { isLoggedIn } = model.state;
 
   if (!isLoggedIn) {
+    location.hash = "#";
     preLoginView.renderForm();
+  }
+
+  if (isLoggedIn) {
+    location.hash = "#products";
+    model.fetchProducts();
   }
 }
 
@@ -19,11 +25,24 @@ function controlFormSubmit(credentials) {
   else if (location.hash === "#register") model.register(credentials);
 }
 
+async function controlProductsView() {
+  const data = await model.fetchProducts();
+  console.log(data);
+  const { current_page, last_page, total } = data.meta;
+  console.log(current_page);
+  console.log(data.meta);
+  if (location.hash === "#products") {
+    productsView.renderShopUI(current_page, last_page, total);
+    productsView.renderItems(data.data);
+  }
+}
+
 function init() {
   preLoginView.addHandlerChangeForm(controlForm);
   preLoginView.addHandlerSubmitForm((credentials) =>
     controlFormSubmit(credentials),
   );
+  productsView.addHandlerShowProducts(controlProductsView);
 }
 
 init();
