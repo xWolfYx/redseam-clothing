@@ -1,4 +1,4 @@
-import View from "./view.js";
+import View from "./View.js";
 
 /*
 ProductsView: Shows the product list with names,
