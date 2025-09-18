@@ -7,10 +7,10 @@ function controlForm() {
   const { isLoggedIn } = model.state;
   if (isLoggedIn) return;
 
-  if (location.hash === "#login") loginView.renderForm();
-  if (location.hash === "#register") loginView.renderForm();
+  console.log(isLoggedIn);
 
-  loginView.setNavContainerContent();
+  if (location.hash === "#login" || location.hash === "#register")
+    loginView.renderForm();
 }
 
 function controlFormSubmit(credentials) {
@@ -35,6 +35,8 @@ async function controlProductsView() {
 
 function init() {
   // const userImg = model.state;
+  const { isLoggedIn } = model.state;
+  loginView.setNavContainerContent(isLoggedIn);
   loginView.addHandlerChangeForm(controlForm);
   loginView.addHandlerSubmitForm((credentials) =>
     controlFormSubmit(credentials),

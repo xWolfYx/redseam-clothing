@@ -13,6 +13,7 @@ It also listens for form submits or clicks on “Register”/“Log in” links 
  */
 
 class LoginView extends View {
+  _parent = document.querySelector(".main-container.login");
   addHandlerChangeForm(handler) {
     ["hashchange", "load"].forEach((ev) =>
       window.addEventListener(ev, handler),
@@ -20,7 +21,7 @@ class LoginView extends View {
   }
 
   addHandlerSubmitForm(handler) {
-    this._parent.addEventListener("submit", (e) => {
+    window.addEventListener("submit", (e) => {
       e.preventDefault();
       const dataArr = new FormData(e.target);
       const data = Object.fromEntries(dataArr);
@@ -62,12 +63,23 @@ class LoginView extends View {
         </form>`;
   }
 
-  setNavContainerContent(isLoggedIn) {
+  setNavContainerContent(isLoggedIn, userImg) {
     const navContainer = document.querySelector(".nav-container");
-    navContainer.innerHTML = !isLoggedIn
-      ? `<img src="${icon.union}" class="header-login-icon">
-         <p>Log in</p>`
-      : "";
+    const userActions = isLoggedIn
+      ? `
+    <img src="${icon.cart}" alt="cart">
+    <div class="user-container">
+      <div class="user-img-container">
+        <img src="${userImg ?? icon.defaultUserImg}" alt="user-img" class="user-img">
+      </div>
+      <img src="${icon.chevronDown}" alt="user options">
+    </div>`
+      : `
+    <div class="user-container">
+      <img src="${icon.union}" class="header-login-icon">
+      <p>Log in</p>
+    </div>`;
+    navContainer.innerHTML = userActions;
   }
 }
 
