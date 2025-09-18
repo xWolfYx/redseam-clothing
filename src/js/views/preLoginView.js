@@ -1,4 +1,5 @@
-import View from "./View";
+import View from "./View.js";
+import * as icon from "./icons.js";
 
 /*
 PreLoginView: Shows a login form or registration form.
@@ -53,6 +54,14 @@ class PreLoginView extends View {
             <input type="submit" value="Log in">
             <p>Already member? <a href="#login">Log in</a></p>
           </div>`;
+  }
+
+  setNavContainerContent() {
+    const navContainer = document.querySelector(".nav-container");
+    if (location.hash === "#login" || location.hash === "")
+      navContainer.innerHTML = `
+    <img src="${icon.union} class="header-login-icon">
+    <p>Log in</p>`;
   }
 }
 

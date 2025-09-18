@@ -9,8 +9,9 @@ function controlForm() {
   const { isLoggedIn } = model.state;
 
   if (!isLoggedIn) {
-    location.hash = "#";
+    location.hash = "";
     preLoginView.renderForm();
+    preLoginView.setNavContainerContent();
   }
 
   if (isLoggedIn) {
