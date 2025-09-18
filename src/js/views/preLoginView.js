@@ -56,29 +56,3 @@ class PreLoginView extends View {
 }
 
 export default new PreLoginView();
-
-//   addHandlerRender(handler) {
-//     window.addEventListener("load", handler);
-//   }
-
-//   addSubmitHandler(handler) {
-//     const form = document.querySelector(".login-form");
-//     if (form)
-//       form.addEventListener("submit", (e) => {
-//         e.preventDefault();
-//         const data = Object.fromEntries(new FormData(e.target));
-//         handler(data);
-//       });
-//     else {
-//       console.log("Form not found");
-//     }
-//   }
-
-//   addToggleHandler(handler) {
-//     this._parent.addEventListener("click", (e) => {
-//       e.preventDefault();
-//       if (e.target.classList.contains("toggle-register")) handler(false);
-//       if (e.target.classList.contains("toggle-register")) handler(true);
-//     });
-//   }
-// }
