@@ -27,10 +27,7 @@ function controlFormSubmit(credentials) {
 
 async function controlProductsView() {
   const data = await model.fetchProducts();
-  console.log(data);
   const { current_page, last_page, total } = data.meta;
-  console.log(current_page);
-  console.log(data.meta);
   if (location.hash === "#products") {
     productsView.renderShopUI(current_page, last_page, total);
     productsView.renderItems(data.data);
