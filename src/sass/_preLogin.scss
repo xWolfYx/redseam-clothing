@@ -1,0 +1,12 @@
+.main-container.pre-login {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+}
+
+.pre-login-img {
+  height: calc(100vh - 80px);
+}
