@@ -28,6 +28,7 @@ class PreLoginView extends View {
   }
 
   renderForm() {
+    document.querySelector(".main-container").classList.add("pre-login");
     if (location.hash === "#login" || location.hash === "")
       this._parent.innerHTML = `
           <h1>Log in</h1>
