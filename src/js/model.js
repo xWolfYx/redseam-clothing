@@ -27,16 +27,15 @@ export async function login(credentials) {
       },
       body: JSON.stringify({ email, password }),
     });
-    console.log(loginRequest);
     // Failure
     if (!loginRequest.ok) {
       throw new Error("Wrong credentials!");
     }
-
     // Success
     const userInfo = await loginRequest.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
+    location.hash = "#products";
     return userInfo.token;
   } catch (err) {
     console.log(err.message);
@@ -90,15 +89,3 @@ export async function fetchProducts() {
   const response = await res.json();
   return response;
 }
-
-// const shopList = document.querySelector(".shop-list");
-
-/*
-1. Page opens
-2. If no token
- - open the form
- - Send form data
- - if token is returned
- - There is a token
- - Open shop
-*/
