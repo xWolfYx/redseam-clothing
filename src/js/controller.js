@@ -1,46 +1,52 @@
-// import { API_URL, AUTH_TOKEN } from "./config.js";
-// import PreLoginView from "./views/preLoginView.js";
 import * as model from "./model.js";
-import preLoginView from "./views/preLoginView.js";
-// import View from "./views/view.js";
+import loginView from "./views/loginView.js";
 import productsView from "./views/productsView.js";
+import paginationView from "./views/paginationView.js";
 
 function controlForm() {
   const { isLoggedIn } = model.state;
+  if (isLoggedIn) return;
 
-  if (!isLoggedIn) {
-    location.hash = "";
-    preLoginView.renderForm();
-    preLoginView.setNavContainerContent();
-  }
+  if (location.hash === "#login") loginView.renderForm();
+  if (location.hash === "#register") loginView.renderForm();
 
-  if (isLoggedIn) {
-    location.hash = "#products";
-    model.fetchProducts();
-  }
+  loginView.setNavContainerContent();
 }
 
 function controlFormSubmit(credentials) {
-  if (location.hash === "#login" || location.hash === "")
-    model.login(credentials);
-  else if (location.hash === "#register") model.register(credentials);
+  if (location.hash === "#login") model.login(credentials);
+  if (location.hash === "#register") model.register(credentials);
 }
 
 async function controlProductsView() {
+  if (location.hash === "#login") return;
+  if (location.hash === "#register") return;
   const data = await model.fetchProducts();
-  const { current_page, last_page, total } = data.meta;
-  if (location.hash === "#products") {
-    productsView.renderShopUI(current_page, last_page, total);
-    productsView.renderItems(data.data);
-  }
+  const { total } = data.meta;
+  productsView.renderShopUI(total);
+  productsView.renderItems(data.data);
+  const { links } = data;
+  console.log(data);
+
+  const { first, last, next, prev } = links;
+  paginationView.renderPagination(first, last, next, prev, total);
+  console.log(links);
 }
 
 function init() {
-  preLoginView.addHandlerChangeForm(controlForm);
-  preLoginView.addHandlerSubmitForm((credentials) =>
+  // const userImg = model.state;
+  loginView.addHandlerChangeForm(controlForm);
+  loginView.addHandlerSubmitForm((credentials) =>
     controlFormSubmit(credentials),
   );
-  productsView.addHandlerShowProducts(controlProductsView);
+
+  productsView.addHandlerShowProducts(
+    controlProductsView,
+    model.state.isLoggedIn,
+    // userImg,
+  );
+
+  // paginationView.addHandlerPaginationRender(controlPaginationView);
 }
 
 init();
@@ -49,7 +55,7 @@ init();
 
 On page load, it asks the Model if there’s a token.
 If yes, it tells the Model to fetch products and hands them to ItemsView to display.
-If no, it tells PreLoginView to show the login form,
+If no, it tells loginView to show the login form,
 then listens for submits or toggle clicks (to switch to registration).
 When you submit a form, it sends the inputs to the Model’s login or register,
 then updates the View based on success (products) or failure (error message).
