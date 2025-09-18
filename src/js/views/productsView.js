@@ -13,8 +13,8 @@ class ProductsView extends View {
     );
   }
 
-  renderShopUI(page, totalPages, totalItems) {
-    document.querySelector(".main-container").classList.remove("pre-login");
+  renderShopUI(totalItems) {
+    document.querySelector(".main-container").classList.remove("login");
     this._parent.innerHTML = `
          <header class="product-list-header">
           <h1>Products</h1>
@@ -30,18 +30,7 @@ class ProductsView extends View {
             </div>
           </div>
         </header>
-        <div class="shop-list"></div>
-        <footer>
-          <div class="page-container">
-            <img src="${icon.chevronLeft}" alt="">
-            <span class="page active">${page}</span>
-            <span class="page">${page + 1}</span>
-            <span class="page">...</span>
-            <span class="page">${totalPages - 1}</span>
-            <span class="page">${totalPages}</span>
-            <img src="${icon.chevronRight}" alt="">
-          </div>
-        </footer>`;
+        <div class="shop-list"></div>`;
   }
 
   renderItems(list) {
