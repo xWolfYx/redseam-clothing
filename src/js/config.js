@@ -1,1 +1,2 @@
-const API_URL = "https://api.redseam.redberryinternship.ge/api/";
+export { API_URL };
+const API_URL = "https://api.redseam.redberryinternship.ge/api";
