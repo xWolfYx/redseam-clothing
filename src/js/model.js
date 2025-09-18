@@ -2,6 +2,7 @@ import { API_URL } from "./config.js";
 
 export const state = {
   isLoggedIn: checkToken(),
+  page: 1,
 };
 
 function checkToken() {
@@ -35,8 +36,6 @@ export async function login(credentials) {
     const userInfo = await loginRequest.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
-    location.hash = "#products";
-    return userInfo.token;
   } catch (err) {
     console.log(err.message);
   }
@@ -52,6 +51,7 @@ export async function register(credentials) {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
       },
+
       body: JSON.stringify({
         email,
         password,
@@ -68,18 +68,15 @@ export async function register(credentials) {
     // Success
     const userInfo = await loginRequest.json();
 
-    console.log(userInfo);
-    console.log(userInfo.token);
-
     localStorage.setItem("redberryAuthentication", userInfo.token);
-    return userInfo.token;
   } catch (err) {
     console.log(err.message);
   }
 }
 
 export async function fetchProducts() {
-  const res = await fetch(`${API_URL}/products`, {
+  const page = state.page;
+  const res = await fetch(`${API_URL}/products?page=${page}'`, {
     method: "GET",
     headers: {
       Accept: "application/json",
