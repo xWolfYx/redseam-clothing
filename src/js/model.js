@@ -5,8 +5,7 @@ export const state = {
 };
 
 function checkToken() {
-  // return localStorage.getItem("redberryAuthentication") ? true : false;
-  return true;
+  return localStorage.getItem("redberryAuthentication") ? true : false;
 }
 
 /*
