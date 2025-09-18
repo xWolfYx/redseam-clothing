@@ -1,5 +1,3 @@
-// import { API_URL } from "../config.js";
-
 export default class View {
-  _parent = document.querySelector(".login-form");
+  _parent = document.querySelector(".main-container");
 }

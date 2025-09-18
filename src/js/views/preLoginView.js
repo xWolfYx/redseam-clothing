@@ -11,6 +11,7 @@ It also listens for form submits or clicks on “Register”/“Log in” links 
  */
 
 class PreLoginView extends View {
+  _parent = document.querySelector(".login-form");
   addHandlerChangeForm(handler) {
     ["hashchange", "load"].forEach((ev) =>
       window.addEventListener(ev, handler),

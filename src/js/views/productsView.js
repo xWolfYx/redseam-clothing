@@ -1,13 +1,12 @@
 import View from "./View.js";
 import * as icon from "./icons.js";
+
 /*
 ProductsView: Shows the product list with names,
 prices, and images, plus a header (e.g., “Showing 1-10 of 50 results”).
 */
 
 class ProductsView extends View {
-  _parent = document.querySelector(".main-container");
-
   addHandlerShowProducts(handler) {
     ["hashchange", "load"].forEach((ev) =>
       window.addEventListener(ev, handler),
@@ -15,7 +14,6 @@ class ProductsView extends View {
   }
 
   renderShopUI(page, totalPages, totalItems) {
-    console.log(icon.adjustmentsHor);
     document.querySelector(".main-container").classList.remove("pre-login");
     this._parent.innerHTML = `
          <header class="product-list-header">
