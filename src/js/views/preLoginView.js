@@ -22,7 +22,6 @@ class PreLoginView extends View {
       e.preventDefault();
       const dataArr = new FormData(e.target);
       const data = Object.fromEntries(dataArr);
-      console.log(data);
       handler(data);
     });
   }
