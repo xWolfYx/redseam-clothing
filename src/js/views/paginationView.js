@@ -2,7 +2,7 @@ import View from "./View.js";
 import * as icon from "./icons.js";
 
 class PaginationView extends View {
-  _parent = document.querySelector(".main-container.login");
+  _parent = document.querySelector(".main-container");
 
   addHandlerPaginationRender(handler) {
     this._parent.addEventListener("onload", handler);
