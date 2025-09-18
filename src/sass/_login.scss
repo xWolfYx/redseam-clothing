@@ -1,4 +1,4 @@
-.main-container.pre-login {
+.main-container .login {
   margin: 0;
   padding: 0;
   display: grid;
@@ -7,6 +7,6 @@
   align-items: center;
 }
 
-.pre-login-img {
+.login-img {
   height: calc(100vh - 80px);
 }

@@ -2,7 +2,7 @@ import View from "./View.js";
 import * as icon from "./icons.js";
 
 /*
-PreLoginView: Shows a login form or registration form.
+LoginView: Shows a login form or registration form.
 It also listens for form submits or clicks on “Register”/“Log in” links to switch forms.
 */
 
@@ -11,7 +11,7 @@ It also listens for form submits or clicks on “Register”/“Log in” links 
  *  <main class="main-container pre-login">
  */
 
-class PreLoginView extends View {
+class LoginView extends View {
   _parent = document.querySelector(".login-form");
   addHandlerChangeForm(handler) {
     ["hashchange", "load"].forEach((ev) =>
@@ -30,8 +30,9 @@ class PreLoginView extends View {
 
   renderForm() {
     document.querySelector(".main-container").classList.add("pre-login");
-    if (location.hash === "#login" || location.hash === "")
+    if (location.hash === "#login")
       this._parent.innerHTML = `
+          <img src="src/img/login-img.webp" class="login-img">
           <h1>Log in</h1>
           <div class="input-fields">
             <input type="text" placeholder="Email or username" name="email" autocomplete="on">
@@ -43,6 +44,7 @@ class PreLoginView extends View {
           </div>`;
     else if (location.hash == "#register")
       this._parent.innerHTML = `
+          <img src="src/img/login-img.webp" class="login-img">
           <h1>Registration</h1>
           <div class="input-fields">
             <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on">
@@ -56,13 +58,13 @@ class PreLoginView extends View {
           </div>`;
   }
 
-  setNavContainerContent() {
+  setNavContainerContent(isLoggedIn) {
     const navContainer = document.querySelector(".nav-container");
-    if (location.hash === "#login" || location.hash === "")
-      navContainer.innerHTML = `
-    <img src="${icon.union}" class="header-login-icon">
-    <p>Log in</p>`;
+    navContainer.innerHTML = !isLoggedIn
+      ? `<img src="${icon.union}" class="header-login-icon">
+         <p>Log in</p>`
+      : "";
   }
 }
 
-export default new PreLoginView();
+export default new LoginView();
