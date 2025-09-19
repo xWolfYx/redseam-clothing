@@ -13,13 +13,13 @@ class ProductsView extends View {
     );
   }
 
-  renderShopUI(totalItems) {
+  renderShopUI(itemsPerPage, totalItems) {
     document.querySelector(".main-container").classList.remove("login");
     this._parent.innerHTML = `
          <header class="product-list-header">
           <h1>Products</h1>
           <div class="list-info-container">
-            <span class="display-info">Showing 1-10 of ${totalItems} results</span>
+            <span class="display-info">Showing 1-${itemsPerPage} of ${totalItems} results</span>
             <div class="filter-settings">
               <img src="${icon.adjustmentsHor}">
               <span>Filter</span>

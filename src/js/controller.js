@@ -21,9 +21,10 @@ function controlFormSubmit(credentials) {
 async function controlProductsView() {
   if (location.hash === "#login") return;
   if (location.hash === "#register") return;
+
   const data = await model.fetchProducts();
-  const { total } = data.meta;
-  productsView.renderShopUI(total);
+  const { total, per_page: itemsPerPage } = data.meta;
+  productsView.renderShopUI(itemsPerPage, total);
   productsView.renderItems(data.data);
   const { links } = data;
   console.log(data);
