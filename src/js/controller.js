@@ -7,8 +7,6 @@ function controlForm() {
   const { isLoggedIn } = model.state;
   if (isLoggedIn) return;
 
-  console.log(isLoggedIn);
-
   if (location.hash === "#login" || location.hash === "#register")
     loginView.renderForm();
 }
@@ -26,17 +24,32 @@ async function controlProductsView() {
   const { total, per_page: itemsPerPage } = data.meta;
   productsView.renderShopUI(itemsPerPage, total);
   productsView.renderItems(data.data);
-  const { links } = data;
+  const { links, meta } = data;
   console.log(data);
 
-  const { first, last, next, prev } = links;
-  paginationView.renderPagination(first, last, next, prev, total);
+  const { last_page: lastPage, current_page: currentPage } = meta;
+  paginationView.renderPagination(lastPage, currentPage);
   console.log(links);
 }
 
+async function controlPageChange(page) {
+  const { lastPage } = model.state;
+
+  if (page < 1) return;
+  if (page > lastPage) return;
+  if (page === model.state.currentPage) return;
+
+  model.state.currentPage = page;
+  const data = await model.fetchProducts(page);
+  const { current_page: currentPage } = data.meta;
+  productsView.renderItems(data.data);
+  paginationView.renderPagination(lastPage, currentPage);
+}
+
 function init() {
+  console.log(model.state);
   // const userImg = model.state;
-  const { isLoggedIn } = model.state;
+  const { isLoggedIn, currentPage } = model.state;
   loginView.setNavContainerContent(isLoggedIn);
   loginView.addHandlerChangeForm(controlForm);
   loginView.addHandlerSubmitForm((credentials) =>
@@ -48,7 +61,8 @@ function init() {
     model.state.isLoggedIn,
     // userImg,
   );
-
+  // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
+  paginationView.addHandlerPageChange(controlPageChange);
   // paginationView.addHandlerPaginationRender(controlPaginationView);
 }
 

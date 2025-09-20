@@ -1,13 +1,20 @@
 import { API_URL } from "./config.js";
 
 export const state = {
-  isLoggedIn: checkToken(),
-  page: 1,
+  userInfo: {},
+  // isLoggedIn: checkToken(),
+  currentPage: 1,
+  lastPage: 1,
+  filter: {
+    from: "",
+    to: "",
+  },
+  sort: "",
 };
 
-function checkToken() {
-  return localStorage.getItem("redberryAuthentication") ? true : false;
-}
+// function checkToken() {
+//   return localStorage.getItem("redberryAuthentication") ? true : false;
+// }
 
 /*
 Checks if a user is logged in by looking for a token in localStorage.
@@ -74,15 +81,26 @@ export async function register(credentials) {
   }
 }
 
+/*
+'
+*/
+
 export async function fetchProducts() {
-  const page = state.page;
-  const res = await fetch(`${API_URL}/products?page=${page}'`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+  const { currentPage, sort } = state;
+  const { from: filterFrom, to: filterTo } = state.filter;
+
+  const res = await fetch(
+    `${API_URL}/products?page=${currentPage}${filterFrom ? `&filter%5Bprice_from%5D=${filterFrom}` : ""}${filterTo ? `&filter%5Bprice_to%5D=${filterTo}` : ""}${sort ? `&sort=price` : ""}`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+  );
 
   const response = await res.json();
+  const { last_page: lastPage } = response.meta;
+  state.lastPage = lastPage;
   return response;
 }
