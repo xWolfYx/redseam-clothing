@@ -44,7 +44,7 @@ class PaginationView extends View {
   addHandlerPageChange(handler) {
     document.querySelector(".pagination").addEventListener("click", (e) => {
       const button = e.target.closest("button");
-      if (!button) return;
+      if (!button || button.textContent === "...") return;
 
       const page = +button.dataset.page;
       if (!button.classList.contains("page")) {
