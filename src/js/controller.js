@@ -46,6 +46,12 @@ async function controlPageChange(page) {
   paginationView.renderPagination(lastPage, currentPage);
 }
 
+function initUserNavActions() {
+  const { isLoggedIn } = model.state;
+  if (isLoggedIn) return;
+  else location.hash = "#login";
+}
+
 function init() {
   console.log(model.state);
   // const userImg = model.state;
@@ -64,6 +70,10 @@ function init() {
   // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
   paginationView.addHandlerPageChange(controlPageChange);
   // paginationView.addHandlerPaginationRender(controlPaginationView);
+
+  document
+    .querySelector(".nav-container")
+    .addEventListener("click", initUserNavActions);
 }
 
 init();
