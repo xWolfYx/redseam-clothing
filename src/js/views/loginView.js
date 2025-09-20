@@ -30,6 +30,10 @@ class LoginView extends View {
   }
 
   renderForm() {
+    // Remove pagination if exists
+    const pageContainer = document.querySelector(".page-container");
+    if (pageContainer) pageContainer.remove();
+
     document.querySelector(".main-container").classList.add("login");
     if (location.hash === "#login")
       this._parent.innerHTML = `
