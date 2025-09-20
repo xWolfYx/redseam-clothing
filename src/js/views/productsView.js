@@ -48,7 +48,7 @@ class ProductsView extends View {
             </div>
           </div>`;
     });
-    shopList.insertAdjacentHTML("beforeend", itemsHTMLString);
+    shopList.innerHTML = itemsHTMLString;
   }
 }
 
