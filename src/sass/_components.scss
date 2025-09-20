@@ -77,10 +77,12 @@
   border: 1px solid colors.$grey;
   border-radius: 4px;
   opacity: 0.6;
-}
+  background-color: transparent;
+  cursor: pointer;
 
-.page.active {
-  opacity: 1;
-  border-color: colors.$red;
-  color: colors.$red;
+  &.active {
+    opacity: 1;
+    border-color: colors.$red;
+    color: colors.$red;
+  }
 }
