@@ -14,16 +14,31 @@ class PaginationView extends View {
             <button class="page" data-page="${currPage - 1}">
               <img src="${icon.chevronLeft}" alt="Previous page button">
             </button>
-            <button class="page active disabled" data-page="${currPage}">${currPage}</button>
-            <button class="page" data-page="${currPage + 1}">${currPage + 1}</button>
-            <button class="page">...</button>
-            <button class="page" data-page="${lastPage - 1}">${lastPage - 1}</button>
-            <button class="page" data-page="${lastPage}">${lastPage}</button>
+            ${this._renderPages(lastPage, currPage)}
             <button class="page" data-page="${currPage + 1}">
               <img src="${icon.chevronRight}" alt="Next page button">
             </button>
           </div>`;
     this._parent.innerHTML = pagination;
+  }
+
+  _renderPages(lastPage, currPage) {
+    const pages = [];
+
+    let start =
+      currPage >= lastPage - 2
+        ? [lastPage - 3, lastPage - 2]
+        : [currPage, currPage + 1, "..."];
+    const end = [lastPage - 1, lastPage];
+
+    pages.push(...start, ...end);
+
+    return pages
+      .map(
+        (btnContent) =>
+          `<button class="page ${btnContent === currPage ? "active" : ""}" data-page="${btnContent}">${btnContent}</button>`,
+      )
+      .join("");
   }
 
   addHandlerPageChange(handler) {
