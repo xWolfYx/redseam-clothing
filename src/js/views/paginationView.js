@@ -25,19 +25,25 @@ class PaginationView extends View {
   _renderPages(lastPage, currPage) {
     const pages = [];
 
-    let start =
-      currPage >= lastPage - 2
-        ? [lastPage - 3, lastPage - 2]
-        : [currPage, currPage + 1, "..."];
-    const end = [lastPage - 1, lastPage];
+    let start = 0;
 
-    pages.push(...start, ...end);
+    if (lastPage <= 4) {
+      for (let i = 1; i <= lastPage; i++) pages.push(i);
+    } else {
+      if (currPage >= lastPage - 2) start = [lastPage - 3, lastPage - 2];
+      else start = [currPage, currPage + 1, "..."];
+      const end = [lastPage - 1, lastPage];
+
+      pages.push(...start, ...end);
+    }
+    console.log(pages);
 
     return pages
       .map(
         (btnContent) =>
-          `<button class="page ${btnContent === currPage ? "active" : ""}" data-page="${btnContent}">${btnContent}</button>`,
+          `<button class="page ${btnContent === currPage && currPage ? "active" : ""}" data-page="${btnContent}">${btnContent}</button>`,
       )
+
       .join("");
   }
 
