@@ -23,6 +23,15 @@ class ProductSettingsView extends View {
     });
   }
 
+  addHandlerFilterItems(handler) {
+    this._parent.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const dataArr = new FormData(e.target);
+      const data = Object.fromEntries(dataArr);
+      handler(data);
+    });
+  }
+
   toggleFilterOptions() {
     const filterHTML = `
     <form class="filter-container">

@@ -62,6 +62,20 @@ function controlItemOptions(setting) {
   }
 }
 
+async function controlFilter(values) {
+  const { from, to } = values;
+  model.state.filter.from = from;
+  model.state.filter.to = to;
+
+  // Fetch the data
+  const data = await model.fetchProducts();
+  productsView.renderItems(data.data);
+
+  // Rerender pagination
+  const { lastPage } = model.state;
+  paginationView.renderPagination(lastPage, 1);
+}
+
 function init() {
   console.log(model.state);
   // const userImg = model.state;
@@ -84,6 +98,7 @@ function init() {
     .addEventListener("click", initUserNavActions);
   productSettingsView.addHandlerSettingsRender(controlItemOptions);
 
+  productSettingsView.addHandlerFilterItems(controlFilter);
   // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
   // paginationView.addHandlerPaginationRender(controlPaginationView);
 }
