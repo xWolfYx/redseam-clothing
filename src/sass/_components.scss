@@ -85,6 +85,10 @@
   padding: 16px;
   border-radius: 8px;
   background-color: white;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .filter-settings-btn,
@@ -147,6 +151,7 @@
 
 // Sort
 .sort-container {
+  z-index: 99999;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
