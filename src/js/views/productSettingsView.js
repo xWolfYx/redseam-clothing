@@ -28,8 +28,8 @@ class ProductSettingsView extends View {
     <form class="filter-container">
       <span>Select price</span>
       <div class="filter-inputs">
-        <input type="text" name="from" placeholder="From">
-        <input type="text" name="to" placeholder="To">
+        <input type="number" name="from" placeholder="From">
+        <input type="number" name="to" placeholder="To">
         <input type="submit" value="Apply">
       </div>
     </form>
