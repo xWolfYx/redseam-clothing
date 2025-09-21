@@ -21,25 +21,6 @@
   color: colors.$dark-blue-secondary;
 }
 
-.filter-settings,
-.sort-settings {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  background-color: transparent;
-  border: none;
-}
-
-.filter-settings {
-  gap: 8px;
-}
-.sort-settings {
-  gap: 4px;
-}
-
 // Cards
 
 .product-card {
@@ -94,19 +75,36 @@
   }
 }
 
+// Filter & sort
+
+.filter-container,
+.sort-container {
+  position: absolute;
+  top: 205px;
+  border: 1px solid colors.$accent-grey;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.filter-settings-btn,
+.sort-settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
 // Filter
 
 .filter-container {
   display: grid;
   grid-template-rows: repeat(2, auto);
   gap: 20px;
-  position: absolute;
-  top: 205px;
   width: 392px;
-  border: 1px solid colors.$accent-grey;
-  padding: 16px;
-  border-radius: 8px;
-  background-color: white;
+  right: 196px;
 
   & span {
     font-weight: 600;
@@ -141,4 +139,42 @@
     border-radius: 10px;
     justify-self: right;
   }
+}
+
+.filter-settings-btn {
+  gap: 8px;
+}
+
+// Sort
+.sort-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  gap: 8px;
+  width: 223px;
+  right: 100px;
+
+  & span {
+    font-weight: 600;
+  }
+}
+
+.sort-buttons {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  & input[type="button"] {
+    text-align: left;
+    padding: 8px 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+    justify-self: right;
+  }
+}
+
+.sort-settings-btn {
+  gap: 4px;
 }
