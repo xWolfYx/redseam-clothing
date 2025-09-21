@@ -25,6 +25,7 @@ class ProductSettingsView extends View {
   addHandlerFilterItems(handler) {
     this._parent.addEventListener("submit", (e) => {
       e.preventDefault();
+      this.toggleFilterOptions();
       const dataArr = new FormData(e.target);
       const data = Object.fromEntries(dataArr);
       handler(data);
@@ -34,6 +35,7 @@ class ProductSettingsView extends View {
   addHandlerSortItems(handler) {
     const sortContainer = document.querySelector(".sort-container");
     sortContainer.addEventListener("click", (e) => {
+      this.toggleSortOptions();
       if (!e.target.classList.contains("sort-btn")) return;
       const result = e.target.dataset.sort;
       handler(result);
