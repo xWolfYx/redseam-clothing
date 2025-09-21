@@ -1,5 +1,4 @@
 import View from "./View.js";
-import * as icon from "./icons.js";
 
 /*
 ProductsView: Shows the product list with names,
@@ -13,7 +12,7 @@ class ProductsView extends View {
     );
   }
 
-  renderShopUI(itemsPerPage, totalItems) {
+  renderItemCount(itemsPerPage, totalItems) {
     this._parent.classList.remove("login");
     const displayInfo = document.querySelector(".display-info");
     displayInfo.textContent = `Showing 1-${itemsPerPage} of ${totalItems} results`;

@@ -17,13 +17,13 @@ function controlFormSubmit(credentials) {
   if (location.hash === "#register") model.register(credentials);
 }
 
-async function controlProductsView() {
+async function renderItemCount() {
   if (location.hash === "#login") return;
   if (location.hash === "#register") return;
 
   const data = await model.fetchProducts();
   const { total, per_page: itemsPerPage } = data.meta;
-  productsView.renderShopUI(itemsPerPage, total);
+  productsView.renderItemCount(itemsPerPage, total);
   productsView.renderItems(data.data);
   const { /* links, */ meta } = data;
   console.log(data);
@@ -91,7 +91,7 @@ function init() {
   );
 
   productsView.addHandlerShowProducts(
-    controlProductsView,
+    renderItemCount,
     model.state.isLoggedIn,
     // userImg,
   );
