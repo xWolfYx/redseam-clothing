@@ -4,8 +4,7 @@ class ProductSettingsView extends View {
   _parent = document.querySelector(".list-info-container");
 
   addHandlerSettingsRender(handler) {
-    const settingsContainer = document.querySelector(".list-info-container");
-    settingsContainer.addEventListener("click", (e) => {
+    this._parent.addEventListener("click", (e) => {
       const button = e.target.closest("button");
       if (
         !button ||
@@ -32,40 +31,34 @@ class ProductSettingsView extends View {
     });
   }
 
+  addHandlerSortItems(handler) {
+    this._parent.addEventListener("submit", (e) => {
+      if (!e.target.classList.contains("sort-container")) return;
+      const result = e.target.value;
+      handler(result);
+    });
+  }
+
   toggleFilterOptions() {
-    const filterHTML = `
-    <form class="filter-container">
-      <span>Select price</span>
-      <div class="filter-inputs">
-        <input type="number" name="from" placeholder="From">
-        <input type="number" name="to" placeholder="To">
-        <input type="submit" value="Apply">
-      </div>
-    </form>
-    `;
     const filterContainer = document.querySelector(".filter-container");
     const sortContainer = document.querySelector(".sort-container");
-    if (sortContainer) sortContainer.remove();
-    if (filterContainer) filterContainer.remove();
-    else this._parent.insertAdjacentHTML("beforeend", filterHTML);
+    if (!sortContainer.classList.contains("hidden"))
+      sortContainer.classList.add("hidden");
+
+    if (filterContainer.classList.contains("hidden"))
+      filterContainer.classList.remove("hidden");
+    else filterContainer.classList.add("hidden");
   }
 
   toggleSortOptions() {
-    const sortHTML = `
-    <form class="sort-container">
-      <span>Sort by</span>
-      <div class="sort-buttons">
-        <input type="button" value="New products first">
-        <input type="button" value="Price, low to high">
-        <input type="button" value="Price, high to low">
-      </div>
-    </form>
-    `;
     const sortContainer = document.querySelector(".sort-container");
     const filterContainer = document.querySelector(".filter-container");
-    if (filterContainer) filterContainer.remove();
-    if (sortContainer) sortContainer.remove();
-    else this._parent.insertAdjacentHTML("beforeend", sortHTML);
+    if (!filterContainer.classList.contains("hidden"))
+      filterContainer.classList.add("hidden");
+
+    if (sortContainer.classList.contains("hidden"))
+      sortContainer.classList.remove("hidden");
+    else sortContainer.classList.add("hidden");
   }
 }
 

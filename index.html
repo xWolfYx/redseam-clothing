@@ -37,6 +37,34 @@
               <span>Sort by</span>
               <img src="src/img/chevron-down.svg">
             </button>
+            <form class="filter-container hidden">
+              <span>Select price</span>
+              <div class="filter-inputs">
+                <input type="number" name="from" placeholder="From">
+                <input type="number" name="to" placeholder="To">
+                <input type="submit" value="Apply">
+              </div>
+            </form>
+            <div class="sort-container hidden">
+              <span>Sort by</span>
+              <div class="sort-buttons">
+                <input
+                  type="button"
+                  data-sort="created_at"
+                  value="New products first"
+                >
+                <input
+                  type="button"
+                  data-sort="price"
+                  value="Price, low to high"
+                >
+                <input
+                  type="button"
+                  data-sort="-price"
+                  value="Price, high to low"
+                >
+              </div>
+            </div>
           </div>
         </header>
         <div class="shop-list"></div>
