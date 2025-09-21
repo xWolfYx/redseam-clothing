@@ -46,9 +46,12 @@ class ProductSettingsView extends View {
     if (!sortContainer.classList.contains("hidden"))
       sortContainer.classList.add("hidden");
 
-    if (filterContainer.classList.contains("hidden"))
+    if (filterContainer.classList.contains("hidden")) {
       filterContainer.classList.remove("hidden");
-    else filterContainer.classList.add("hidden");
+      const firstInput = filterContainer.querySelector(`input[name="from"]`);
+      console.log(firstInput);
+      firstInput.focus();
+    } else filterContainer.classList.add("hidden");
   }
 
   toggleSortOptions() {
