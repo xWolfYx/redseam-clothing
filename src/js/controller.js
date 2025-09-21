@@ -25,7 +25,7 @@ async function controlProductsView() {
   const { total, per_page: itemsPerPage } = data.meta;
   productsView.renderShopUI(itemsPerPage, total);
   productsView.renderItems(data.data);
-  const { links, meta } = data;
+  const { /* links, */ meta } = data;
   console.log(data);
 
   const { last_page: lastPage, current_page: currentPage } = meta;
@@ -52,14 +52,20 @@ function initUserNavActions() {
   else location.hash = "#login";
 }
 
-function controlFilterOptions() {
-  productSettingsView.toggleFilterOptions();
+function controlItemOptions(setting) {
+  if (setting === "filter") {
+    productSettingsView.toggleFilterOptions();
+  }
+
+  if (setting === "sort") {
+    productSettingsView.toggleSortOptions();
+  }
 }
 
 function init() {
   console.log(model.state);
   // const userImg = model.state;
-  const { isLoggedIn, currentPage } = model.state;
+  const { isLoggedIn /* currentPage */ } = model.state;
   loginView.setNavContainerContent(isLoggedIn);
   loginView.addHandlerChangeForm(controlForm);
   loginView.addHandlerSubmitForm((credentials) =>
@@ -76,7 +82,7 @@ function init() {
   document
     .querySelector(".nav-container")
     .addEventListener("click", initUserNavActions);
-  productSettingsView.addHandlerFilterRender(controlFilterOptions);
+  productSettingsView.addHandlerSettingsRender(controlItemOptions);
 
   // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
   // paginationView.addHandlerPaginationRender(controlPaginationView);
