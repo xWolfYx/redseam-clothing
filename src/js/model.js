@@ -81,10 +81,6 @@ export async function register(credentials) {
   }
 }
 
-/*
-'
-*/
-
 export async function fetchProducts() {
   const { currentPage, sort } = state;
   const { from: filterFrom, to: filterTo } = state.filter;
