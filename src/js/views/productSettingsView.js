@@ -35,6 +35,8 @@ class ProductSettingsView extends View {
     </form>
     `;
     const filterContainer = document.querySelector(".filter-container");
+    const sortContainer = document.querySelector(".sort-container");
+    if (sortContainer) sortContainer.remove();
     if (filterContainer) filterContainer.remove();
     else this._parent.insertAdjacentHTML("beforeend", filterHTML);
   }
@@ -50,8 +52,10 @@ class ProductSettingsView extends View {
       </div>
     </form>
     `;
-    const filterContainer = document.querySelector(".sort-container");
+    const sortContainer = document.querySelector(".sort-container");
+    const filterContainer = document.querySelector(".filter-container");
     if (filterContainer) filterContainer.remove();
+    if (sortContainer) sortContainer.remove();
     else this._parent.insertAdjacentHTML("beforeend", sortHTML);
   }
 }
