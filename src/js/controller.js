@@ -2,6 +2,7 @@ import * as model from "./model.js";
 import loginView from "./views/loginView.js";
 import productsView from "./views/productsView.js";
 import paginationView from "./views/paginationView.js";
+import productSettingsView from "./views/productSettingsView.js";
 
 function controlForm() {
   const { isLoggedIn } = model.state;
@@ -29,7 +30,6 @@ async function controlProductsView() {
 
   const { last_page: lastPage, current_page: currentPage } = meta;
   paginationView.renderPagination(lastPage, currentPage);
-  console.log(links);
 }
 
 async function controlPageChange(page) {
@@ -52,6 +52,10 @@ function initUserNavActions() {
   else location.hash = "#login";
 }
 
+function controlFilterOptions() {
+  productSettingsView.toggleFilterOptions();
+}
+
 function init() {
   console.log(model.state);
   // const userImg = model.state;
@@ -67,13 +71,15 @@ function init() {
     model.state.isLoggedIn,
     // userImg,
   );
-  // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
   paginationView.addHandlerPageChange(controlPageChange);
-  // paginationView.addHandlerPaginationRender(controlPaginationView);
 
   document
     .querySelector(".nav-container")
     .addEventListener("click", initUserNavActions);
+  productSettingsView.addHandlerFilterRender(controlFilterOptions);
+
+  // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
+  // paginationView.addHandlerPaginationRender(controlPaginationView);
 }
 
 init();
