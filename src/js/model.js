@@ -86,7 +86,7 @@ export async function fetchProducts() {
   const { from: filterFrom, to: filterTo } = state.filter;
 
   const res = await fetch(
-    `${API_URL}/products?page=${currentPage}${filterFrom ? `&filter%5Bprice_from%5D=${filterFrom}` : ""}${filterTo ? `&filter%5Bprice_to%5D=${filterTo}` : ""}${sort ? `&sort=price` : ""}`,
+    `${API_URL}/products?page=${currentPage}${filterFrom ? `&filter%5Bprice_from%5D=${filterFrom}` : ""}${filterTo ? `&filter%5Bprice_to%5D=${filterTo}` : ""}${sort ? `&sort=${sort}` : ""}`,
     {
       method: "GET",
       headers: {

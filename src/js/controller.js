@@ -53,13 +53,8 @@ function initUserNavActions() {
 }
 
 function controlItemOptions(setting) {
-  if (setting === "filter") {
-    productSettingsView.toggleFilterOptions();
-  }
-
-  if (setting === "sort") {
-    productSettingsView.toggleSortOptions();
-  }
+  if (setting === "filter") productSettingsView.toggleFilterOptions();
+  if (setting === "sort") productSettingsView.toggleSortOptions();
 }
 
 async function controlFilter(values) {
@@ -74,6 +69,15 @@ async function controlFilter(values) {
   // Rerender pagination
   const { lastPage } = model.state;
   paginationView.renderPagination(lastPage, 1);
+}
+
+async function controlSort(sortOption) {
+  model.state.sort = sortOption;
+  const data = await model.fetchProducts();
+  productsView.renderItems(data.data);
+  const { lastPage } = model.state;
+  paginationView.renderPagination(lastPage, 1);
+  console.log(data);
 }
 
 function init() {
@@ -99,8 +103,7 @@ function init() {
   productSettingsView.addHandlerSettingsRender(controlItemOptions);
 
   productSettingsView.addHandlerFilterItems(controlFilter);
-  // paginationView.addHandlerPaginationRender(controlPageChange(currentPage));
-  // paginationView.addHandlerPaginationRender(controlPaginationView);
+  productSettingsView.addHandlerSortItems(controlSort);
 }
 
 init();

@@ -32,9 +32,10 @@ class ProductSettingsView extends View {
   }
 
   addHandlerSortItems(handler) {
-    this._parent.addEventListener("submit", (e) => {
-      if (!e.target.classList.contains("sort-container")) return;
-      const result = e.target.value;
+    const sortContainer = document.querySelector(".sort-container");
+    sortContainer.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("sort-btn")) return;
+      const result = e.target.dataset.sort;
       handler(result);
     });
   }
