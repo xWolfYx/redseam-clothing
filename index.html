@@ -18,61 +18,67 @@
     <div class="container">
       <header class="top-header">
         <nav class="top-nav">
-          <a href="./">
+          <a href="">
             <img src="src/img/main-logo.svg" alt="main page link">
           </a>
           <div class="nav-container"></div>
         </nav>
       </header>
-      <main class="main-container login">
-        <header class="product-list-header">
-          <h1>Products</h1>
-          <div class="list-info-container">
-            <span class="display-info"></span>
-            <button class="filter-settings-btn">
-              <img src="src/img/adjustments-horizontal.svg">
-              <span>Filter</span>
-            </button>
-            <button class="sort-settings-btn">
-              <span>Sort by</span>
-              <img src="src/img/chevron-down.svg">
-            </button>
-            <form class="filter-container hidden">
-              <span>Select price</span>
-              <div class="filter-inputs">
-                <input type="number" name="from" placeholder="From">
-                <input type="number" name="to" placeholder="To">
-                <input type="submit" value="Apply">
-              </div>
-            </form>
-            <div class="sort-container hidden">
-              <span>Sort by</span>
-              <div class="sort-buttons">
-                <input
-                  type="button"
-                  class="sort-btn"
-                  data-sort="created_at"
-                  value="New products first"
-                >
-                <input
-                  type="button"
-                  class="sort-btn"
-                  data-sort="price"
-                  value="Price, low to high"
-                >
-                <input
-                  type="button"
-                  class="sort-btn"
-                  data-sort="-price"
-                  value="Price, high to low"
-                >
+      <main class="main-container">
+        <div class="shop-container">
+          <header class="product-list-header">
+            <h1>Products</h1>
+            <div class="list-info-container">
+              <span class="display-info"></span>
+              <button class="filter-settings-btn">
+                <img src="src/img/adjustments-horizontal.svg">
+                <span>Filter</span>
+              </button>
+              <button class="sort-settings-btn">
+                <span>Sort by</span>
+                <img src="src/img/chevron-down.svg">
+              </button>
+              <form class="filter-container hidden">
+                <span>Select price</span>
+                <div class="filter-inputs">
+                  <input type="number" name="from" placeholder="From">
+                  <input type="number" name="to" placeholder="To">
+                  <input type="submit" value="Apply">
+                </div>
+              </form>
+              <div class="sort-container hidden">
+                <span>Sort by</span>
+                <div class="sort-buttons">
+                  <input
+                    type="button"
+                    class="sort-btn"
+                    data-sort="created_at"
+                    value="New products first"
+                  >
+                  <input
+                    type="button"
+                    class="sort-btn"
+                    data-sort="price"
+                    value="Price, low to high"
+                  >
+                  <input
+                    type="button"
+                    class="sort-btn"
+                    data-sort="-price"
+                    value="Price, high to low"
+                  >
+                </div>
               </div>
             </div>
-          </div>
-        </header>
-        <div class="shop-list"></div>
+          </header>
+          <div class="shop-list"></div>
+          <div class="pagination"></div>
+        </div>
+        <div class="login-container hidden">
+          <img src="src/img/login-img.webp" class="login-img">
+          <form class="login-form" method="POST"></form>
+        </div>
       </main>
-      <footer class="pagination"></footer>
     </div>
   </body>
 </html>
