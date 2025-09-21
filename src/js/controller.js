@@ -26,7 +26,6 @@ async function renderItemCount() {
   productsView.renderItemCount(itemsPerPage, total);
   productsView.renderItems(data.data);
   const { /* links, */ meta } = data;
-  console.log(data);
 
   const { last_page: lastPage, current_page: currentPage } = meta;
   paginationView.renderPagination(lastPage, currentPage);
@@ -81,7 +80,6 @@ async function controlSort(sortOption) {
 }
 
 function init() {
-  console.log(model.state);
   // const userImg = model.state;
   const { isLoggedIn /* currentPage */ } = model.state;
   loginView.setNavContainerContent(isLoggedIn);
