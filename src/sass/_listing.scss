@@ -1,0 +1,168 @@
+@use "_colors";
+
+.listing-container {
+  display: flex;
+  gap: 168px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: 2;
+
+  &.hidden {
+    display: none;
+  }
+
+  & hr {
+    border: 1px solid colors.$grey;
+  }
+}
+
+.listing-parameters {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  width: 704px;
+}
+
+.listing-header {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  text-transform: capitalize;
+}
+
+.listing-images-container {
+  display: flex;
+  gap: 24px;
+}
+
+.listing-other-imgs {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 9px;
+
+  & img {
+    width: 121px;
+  }
+}
+
+.listing-cover-img {
+  width: 703px;
+}
+
+.listing-name,
+.listing-price {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.color-btns,
+.size-btns {
+  display: flex;
+  flex-direction: row;
+}
+
+.color-btn,
+.size-btn {
+  cursor: pointer;
+}
+
+.color-btns {
+  gap: 13px;
+}
+
+.color-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+
+  &.active {
+    outline: 1px solid colors.$accent-grey;
+    outline-offset: 3px;
+  }
+}
+
+.size-btns {
+  gap: 8px;
+}
+
+.size-btn {
+  width: 70px;
+  height: 42px;
+  padding: 9px 16px;
+  border: 1px solid colors.$grey;
+  background-color: transparent;
+  border-radius: 10px;
+
+  &.active {
+    border-color: colors.$dark-blue-primary;
+    background-color: colors.$grey;
+  }
+}
+
+.quantity-container {
+  width: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#quantity {
+  cursor: pointer;
+  padding: 9px 16px;
+  text-align: center;
+  border: 1px solid colors.$grey;
+  outline: none;
+  border-radius: 10px;
+  color: colors.$dark-blue-primary;
+
+  option {
+    color: inherit;
+  }
+}
+
+.listing-add-to-cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 16px 60px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  background-color: colors.$red;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  h3 {
+    font-weight: 500;
+  }
+}
+
+.details-header {
+  display: inherit;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+}
+
+.brand-img {
+  height: 61;
+}
+
+.about-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
