@@ -4,9 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
 
-.container {
   font-family:
     "Poppins",
     system-ui,
@@ -20,6 +18,9 @@
     "Open Sans",
     sans-serif;
   color: colors.$dark-blue-primary;
+}
+
+.container {
 }
 
 .main-container {
