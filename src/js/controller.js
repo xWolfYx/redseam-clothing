@@ -3,6 +3,7 @@ import loginView from "./views/loginView.js";
 import productsView from "./views/productsView.js";
 import paginationView from "./views/paginationView.js";
 import productSettingsView from "./views/productSettingsView.js";
+import listingView from "./views/listingView.js";
 
 function controlForm() {
   const { isLoggedIn } = model.state;
@@ -79,6 +80,13 @@ async function controlSort(sortOption) {
   console.log(data);
 }
 
+async function controlShowListing(item) {
+  const { id } = item.dataset;
+  const productData = await model.fetchItem(id);
+
+  await listingView.showListing(productData);
+}
+
 function init() {
   // const userImg = model.state;
   const { isLoggedIn /* currentPage */ } = model.state;
@@ -102,6 +110,7 @@ function init() {
 
   productSettingsView.addHandlerFilterItems(controlFilter);
   productSettingsView.addHandlerSortItems(controlSort);
+  listingView.addHandlerShowListing(controlShowListing);
 }
 
 init();

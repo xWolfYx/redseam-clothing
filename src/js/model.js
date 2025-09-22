@@ -100,3 +100,14 @@ export async function fetchProducts() {
   state.lastPage = lastPage;
   return response;
 }
+
+export async function fetchItem(id) {
+  const res = await fetch(`${API_URL}/products/${id}}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+  const response = await res.json();
+  return response;
+}
