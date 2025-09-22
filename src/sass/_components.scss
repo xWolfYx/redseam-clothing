@@ -5,6 +5,7 @@
   flex-flow: row wrap;
   justify-content: space-between;
   margin-bottom: 32px;
+
   & > h1 {
     font-weight: 600;
   }
@@ -80,7 +81,7 @@
 .filter-container,
 .sort-container {
   position: absolute;
-  top: 205px;
+  top: 53px;
   border: 1px solid colors.$accent-grey;
   padding: 16px;
   border-radius: 8px;
@@ -110,7 +111,7 @@
   grid-template-rows: repeat(2, auto);
   gap: 20px;
   width: 392px;
-  right: 196px;
+  right: 96px;
 
   & span {
     font-weight: 600;
@@ -159,7 +160,7 @@
   justify-content: space-between;
   gap: 8px;
   width: 223px;
-  right: 100px;
+  right: 0;
 
   & span {
     font-weight: 600;

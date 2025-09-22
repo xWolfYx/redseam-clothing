@@ -1,4 +1,6 @@
 .shop-container {
+  position: relative;
+
   &.hidden {
     display: none;
   }
