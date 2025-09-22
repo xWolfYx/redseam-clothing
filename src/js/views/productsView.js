@@ -13,7 +13,6 @@ class ProductsView extends View {
   }
 
   renderItemCount(itemsPerPage, totalItems) {
-    this._parent.classList.remove("login");
     const displayInfo = document.querySelector(".display-info");
     displayInfo.textContent = `Showing 1-${itemsPerPage} of ${totalItems} results`;
   }
@@ -23,7 +22,7 @@ class ProductsView extends View {
     let itemsHTMLString = "";
     list.forEach((item) => {
       itemsHTMLString += `
-          <div class="product-card">
+          <div class="product-card" data-id="${item.id}">
             <div class="img-container">
               <img src="${item.cover_image}" class="cover-img">
             </div>
