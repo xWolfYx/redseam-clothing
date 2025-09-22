@@ -36,7 +36,6 @@ class PaginationView extends View {
 
       pages.push(...start, ...end);
     }
-    console.log(pages);
 
     return pages
       .map(
