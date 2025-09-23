@@ -39,6 +39,15 @@ class ListingView extends View {
     });
   }
 
+  addHandlerSetItemSize(handler) {
+    document.addEventListener("click", (e) => {
+      const sizeBtn = e.target.closest("button");
+      if (!sizeBtn || !sizeBtn.closest(".size-btns")) return;
+
+      handler(sizeBtn);
+    });
+  }
+
   renderListing(productData) {
     // Data from the API
 
@@ -92,7 +101,7 @@ class ListingView extends View {
       ? availableSizes
           .map(
             (size) =>
-              `<button data-size="${size}" class="size-btn">${size}</button>`,
+              `<button data-size="${size}" data-size="${size}" class="size-btn">${size}</button>`,
           )
           .join("")
       : "No sizes available for this product";
@@ -156,6 +165,17 @@ class ListingView extends View {
     [...allBtns].forEach((btn) => btn.classList.remove("active"));
     colorBtn.classList.add("active");
     colorSpan.textContent = `Color: ${colorBtn.dataset.color}`;
+  }
+
+  setItemSize(sizeBtn) {
+    console.log(sizeBtn);
+    const sizeBtnsContainer = document.querySelector(".size-btns");
+    const allBtns = sizeBtnsContainer.children;
+    const sizeSpan = document.querySelector(".size");
+
+    [...allBtns].forEach((btn) => btn.classList.remove("active"));
+    sizeBtn.classList.add("active");
+    sizeSpan.textContent = `Color: ${sizeBtn.dataset.size}`;
   }
 }
 

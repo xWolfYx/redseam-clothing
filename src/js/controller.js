@@ -39,6 +39,7 @@ class Controller {
     listingView.addHandlerToggleListing(this.controlToggleListing.bind(this));
     listingView.addHandlerListImgChange(this.controlListImgChange.bind(this));
     listingView.addHandlerSetItemColor(this.controlSetItemColor.bind(this));
+    listingView.addHandlerSetItemSize(this.controlSetItemSize.bind(this));
   }
 
   controlForm() {
@@ -130,6 +131,10 @@ class Controller {
   controlSetItemColor(colorBtn, colorNum) {
     listingView.setItemColor(colorBtn);
     listingView.changeListingImage(undefined, colorNum);
+  }
+
+  controlSetItemSize(sizeBtn) {
+    listingView.setItemSize(sizeBtn);
   }
 
   async #fetchAndRenderProducts(page = model.state.currentPage) {
