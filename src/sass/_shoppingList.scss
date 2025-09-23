@@ -8,7 +8,7 @@
 
 .shop-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 408px);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 408px));
   justify-content: center;
   align-items: center;
   gap: 48px 24px;
