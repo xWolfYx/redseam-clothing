@@ -96,12 +96,12 @@ async function controlSort(sortOption) {
   }
 }
 
-async function controlShowListing(item) {
+async function controlRenderListing(item) {
   try {
     const { id } = item.dataset;
     const productData = await model.fetchItem(id);
 
-    await listingView.showListing(productData);
+    await listingView.renderListing(productData);
   } catch (err) {
     console.log(err.message);
   }
@@ -130,7 +130,7 @@ function init() {
 
   productSettingsView.addHandlerFilterItems(controlFilter);
   productSettingsView.addHandlerSortItems(controlSort);
-  listingView.addHandlerShowListing(controlShowListing);
+  listingView.addHandlerRenderListing(controlRenderListing);
 }
 
 init();

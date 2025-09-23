@@ -4,7 +4,7 @@ import * as icon from "./icons.js";
 class ListingView extends View {
   _parent = document.querySelectorAll(".shop-list");
 
-  addHandlerShowListing(handler) {
+  addHandlerRenderListing(handler) {
     document.addEventListener("click", (e) => {
       const productCard = e.target.closest(".product-card");
       if (!productCard) return;
@@ -12,7 +12,7 @@ class ListingView extends View {
     });
   }
 
-  showListing(productData) {
+  renderListing(productData) {
     // Data from the API
 
     const {
@@ -59,11 +59,13 @@ class ListingView extends View {
 
     const sizesContainer = document.querySelector(".size-btns");
     sizesContainer.innerHTML = availableSizes
-      .map(
-        (size) =>
-          `<button data-size="${size}" class="size-btn">${size}</button>`,
-      )
-      .join("");
+      ? availableSizes
+          .map(
+            (size) =>
+              `<button data-size="${size}" class="size-btn">${size}</button>`,
+          )
+          .join("")
+      : "No sizes available for this product";
 
     const quantityEl = document.querySelector("#quantity");
 
