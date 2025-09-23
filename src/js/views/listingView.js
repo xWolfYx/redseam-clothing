@@ -12,6 +12,16 @@ class ListingView extends View {
     });
   }
 
+  addHandlerToggleListing(handler) {
+    document.addEventListener("click", (e) => {
+      const listingContainer =
+        e.target.classList.contains("top-nav");
+      const productCard = e.target.closest(".product-card");
+      if (productCard) handler("show");
+      else if (listingContainer) handler("hide");
+    });
+  }
+
   renderListing(productData) {
     // Data from the API
 
@@ -90,6 +100,20 @@ class ListingView extends View {
     brandNameEl.textContent = `Brand: ${brandName}`;
 
     console.log(productData);
+  }
+
+  showListing() {
+    const shopList = document.querySelector(".shop-list");
+    const listingContainer = document.querySelector(".listing-container");
+    listingContainer.classList.remove("hidden");
+    shopList.classList.add("hidden");
+  }
+
+  hideListing() {
+    const shopList = document.querySelector(".shop-list");
+    const listingContainer = document.querySelector(".listing-container");
+    listingContainer.classList.add("hidden");
+    shopList.classList.remove("hidden");
   }
 }
 

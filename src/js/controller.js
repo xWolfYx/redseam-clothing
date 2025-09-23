@@ -107,6 +107,11 @@ async function controlRenderListing(item) {
   }
 }
 
+function controlToggleListing(listingState) {
+  if (listingState === "show") listingView.showListing();
+  if (listingState === "hide") listingView.hideListing();
+}
+
 function init() {
   // const userImg = model.state;
   const { isLoggedIn /* currentPage */ } = model.state;
@@ -131,6 +136,7 @@ function init() {
   productSettingsView.addHandlerFilterItems(controlFilter);
   productSettingsView.addHandlerSortItems(controlSort);
   listingView.addHandlerRenderListing(controlRenderListing);
+  listingView.addHandlerToggleListing(controlToggleListing);
 }
 
 init();
