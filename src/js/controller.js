@@ -5,141 +5,143 @@ import paginationView from "./views/paginationView.js";
 import productSettingsView from "./views/productSettingsView.js";
 import listingView from "./views/listingView.js";
 
-function controlForm() {
-  const { isLoggedIn } = model.state;
-  if (isLoggedIn) return;
+class Controller {
+  constructor() {
+    this.#init();
+  }
 
-  if (location.hash === "#login" || location.hash === "#register")
-    loginView.renderForm();
-}
+  #init() {
+    // const userImg = model.state;
+    const { isLoggedIn /* currentPage */ } = model.state;
+    loginView.setNavContainerContent(isLoggedIn);
+    loginView.addHandlerChangeForm(this.controlForm.bind(this));
+    loginView.addHandlerSubmitForm((credentials) =>
+      this.controlFormSubmit(credentials),
+    );
 
-function controlFormSubmit(credentials) {
-  if (location.hash === "#login") model.login(credentials);
-  if (location.hash === "#register") model.register(credentials);
-}
+    productsView.addHandlerShowProducts(
+      this.renderItemCount.bind(this),
+      model.state.isLoggedIn,
+      // userImg,
+    );
+    paginationView.addHandlerPageChange(this.controlPageChange.bind(this));
 
-async function renderItemCount() {
-  try {
-    if (location.hash === "#login") return;
-    if (location.hash === "#register") return;
+    document
+      .querySelector(".nav-container")
+      .addEventListener("click", this.initUserNavActions.bind(this));
+    productSettingsView.addHandlerSettingsRender(
+      this.controlItemOptions.bind(this),
+    );
 
-    const data = await model.fetchProducts();
-    const { total, per_page: itemsPerPage } = data.meta;
-    productsView.renderItemCount(itemsPerPage, total);
-    productsView.renderItems(data.data);
-    const { /* links, */ meta } = data;
+    productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
+    productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
+    listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
+    listingView.addHandlerToggleListing(this.controlToggleListing.bind(this));
+  }
 
-    const { last_page: lastPage, current_page: currentPage } = meta;
-    paginationView.renderPagination(lastPage, currentPage);
-  } catch (err) {
-    console.log(err.message);
+  controlForm() {
+    const { isLoggedIn } = model.state;
+    if (isLoggedIn) return;
+
+    if (location.hash === "#login" || location.hash === "#register")
+      loginView.renderForm();
+  }
+
+  controlFormSubmit(credentials) {
+    if (location.hash === "#login") model.login(credentials);
+    if (location.hash === "#register") model.register(credentials);
+  }
+
+  async renderItemCount() {
+    try {
+      if (location.hash === "#login" || location.hash === "#register") return;
+      await this.#fetchAndRenderProducts();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async controlPageChange(page) {
+    try {
+      const { lastPage, currentPage } = model.state;
+      if (page < 1 || page > lastPage || page === currentPage) return;
+
+      model.state.currentPage = page;
+      this.#fetchAndRenderProducts(page);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  initUserNavActions() {
+    const { isLoggedIn } = model.state;
+    if (isLoggedIn) return;
+    else location.hash = "#login";
+  }
+
+  controlItemOptions(setting) {
+    if (setting === "filter") productSettingsView.toggleFilterOptions();
+    if (setting === "sort") productSettingsView.toggleSortOptions();
+  }
+
+  async controlFilter(values) {
+    try {
+      const { from, to } = values;
+      model.state.filter.from = from;
+      model.state.filter.to = to;
+
+      // Fetch the data
+      this.#fetchAndRenderProducts();
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  async controlSort(sortOption) {
+    try {
+      model.state.sort = sortOption;
+      this.#fetchAndRenderProducts();
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  async controlRenderListing(item) {
+    try {
+      const { id } = item.dataset;
+      const productData = await model.fetchItem(id);
+      await listingView.renderListing(productData);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  controlToggleListing(listingState) {
+    if (listingState === "show") listingView.showListing();
+    if (listingState === "hide") listingView.hideListing();
+  }
+
+  async #fetchAndRenderProducts(page = model.state.currentPage) {
+    try {
+      const data = await model.fetchProducts(page);
+      const {
+        total,
+        per_page: itemsPerPage,
+        last_page: lastPage,
+        current_page: currentPage,
+      } = data.meta;
+
+      model.state.lastPage = lastPage;
+      productsView.renderItemCount(itemsPerPage, total);
+      productsView.renderItems(data.data);
+      paginationView.renderPagination(lastPage, currentPage);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
-async function controlPageChange(page) {
-  try {
-    const { lastPage } = model.state;
-
-    if (page < 1) return;
-    if (page > lastPage) return;
-    if (page === model.state.currentPage) return;
-
-    model.state.currentPage = page;
-    const data = await model.fetchProducts(page);
-    const { current_page: currentPage } = data.meta;
-    productsView.renderItems(data.data);
-    paginationView.renderPagination(lastPage, currentPage);
-  } catch (err) {
-    console.log(err.message);
-  }
-}
-
-function initUserNavActions() {
-  const { isLoggedIn } = model.state;
-  if (isLoggedIn) return;
-  else location.hash = "#login";
-}
-
-function controlItemOptions(setting) {
-  if (setting === "filter") productSettingsView.toggleFilterOptions();
-  if (setting === "sort") productSettingsView.toggleSortOptions();
-}
-
-async function controlFilter(values) {
-  try {
-    const { from, to } = values;
-    model.state.filter.from = from;
-    model.state.filter.to = to;
-
-    // Fetch the data
-    const data = await model.fetchProducts();
-    productsView.renderItems(data.data);
-
-    // Rerender pagination
-    const { lastPage } = model.state;
-    paginationView.renderPagination(lastPage, 1);
-  } catch (err) {
-    console.log(err.message);
-  }
-}
-
-async function controlSort(sortOption) {
-  try {
-    model.state.sort = sortOption;
-    const data = await model.fetchProducts();
-    productsView.renderItems(data.data);
-    const { lastPage } = model.state;
-    paginationView.renderPagination(lastPage, 1);
-    console.log(data);
-  } catch (err) {
-    console.log(err.message);
-  }
-}
-
-async function controlRenderListing(item) {
-  try {
-    const { id } = item.dataset;
-    const productData = await model.fetchItem(id);
-
-    await listingView.renderListing(productData);
-  } catch (err) {
-    console.log(err.message);
-  }
-}
-
-function controlToggleListing(listingState) {
-  if (listingState === "show") listingView.showListing();
-  if (listingState === "hide") listingView.hideListing();
-}
-
-function init() {
-  // const userImg = model.state;
-  const { isLoggedIn /* currentPage */ } = model.state;
-  loginView.setNavContainerContent(isLoggedIn);
-  loginView.addHandlerChangeForm(controlForm);
-  loginView.addHandlerSubmitForm((credentials) =>
-    controlFormSubmit(credentials),
-  );
-
-  productsView.addHandlerShowProducts(
-    renderItemCount,
-    model.state.isLoggedIn,
-    // userImg,
-  );
-  paginationView.addHandlerPageChange(controlPageChange);
-
-  document
-    .querySelector(".nav-container")
-    .addEventListener("click", initUserNavActions);
-  productSettingsView.addHandlerSettingsRender(controlItemOptions);
-
-  productSettingsView.addHandlerFilterItems(controlFilter);
-  productSettingsView.addHandlerSortItems(controlSort);
-  listingView.addHandlerRenderListing(controlRenderListing);
-  listingView.addHandlerToggleListing(controlToggleListing);
-}
-
-init();
+new Controller();
 
 /*
 
