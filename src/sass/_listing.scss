@@ -34,6 +34,13 @@
   text-transform: capitalize;
 }
 
+.listing-colors,
+.listing-sizes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .listing-images-container {
   display: flex;
   gap: 24px;
@@ -79,11 +86,11 @@
   height: 38px;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.05);
 
   &.active {
     outline: 1px solid colors.$accent-grey;
-    outline-offset: 3px;
+    outline-offset: 5px;
   }
 }
 
