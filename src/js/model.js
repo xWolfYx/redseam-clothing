@@ -82,32 +82,40 @@ export async function register(credentials) {
 }
 
 export async function fetchProducts() {
-  const { currentPage, sort } = state;
-  const { from: filterFrom, to: filterTo } = state.filter;
+  try {
+    const { currentPage, sort } = state;
+    const { from: filterFrom, to: filterTo } = state.filter;
 
-  const res = await fetch(
-    `${API_URL}/products?page=${currentPage}${filterFrom ? `&filter%5Bprice_from%5D=${filterFrom}` : ""}${filterTo ? `&filter%5Bprice_to%5D=${filterTo}` : ""}${sort ? `&sort=${sort}` : ""}`,
-    {
+    const res = await fetch(
+      `${API_URL}/products?page=${currentPage}${filterFrom ? `&filter%5Bprice_from%5D=${filterFrom}` : ""}${filterTo ? `&filter%5Bprice_to%5D=${filterTo}` : ""}${sort ? `&sort=${sort}` : ""}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      },
+    );
+
+    const response = await res.json();
+    const { last_page: lastPage } = response.meta;
+    state.lastPage = lastPage;
+    return response;
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+export async function fetchItem(id) {
+  try {
+    const res = await fetch(`${API_URL}/products/${id}}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
       },
-    },
-  );
-
-  const response = await res.json();
-  const { last_page: lastPage } = response.meta;
-  state.lastPage = lastPage;
-  return response;
-}
-
-export async function fetchItem(id) {
-  const res = await fetch(`${API_URL}/products/${id}}`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
-    },
-  });
-  const response = await res.json();
-  return response;
+    });
+    const response = await res.json();
+    return response;
+  } catch (err) {
+    console.log(err.message);
+  }
 }

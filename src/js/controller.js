@@ -19,31 +19,39 @@ function controlFormSubmit(credentials) {
 }
 
 async function renderItemCount() {
-  if (location.hash === "#login") return;
-  if (location.hash === "#register") return;
+  try {
+    if (location.hash === "#login") return;
+    if (location.hash === "#register") return;
 
-  const data = await model.fetchProducts();
-  const { total, per_page: itemsPerPage } = data.meta;
-  productsView.renderItemCount(itemsPerPage, total);
-  productsView.renderItems(data.data);
-  const { /* links, */ meta } = data;
+    const data = await model.fetchProducts();
+    const { total, per_page: itemsPerPage } = data.meta;
+    productsView.renderItemCount(itemsPerPage, total);
+    productsView.renderItems(data.data);
+    const { /* links, */ meta } = data;
 
-  const { last_page: lastPage, current_page: currentPage } = meta;
-  paginationView.renderPagination(lastPage, currentPage);
+    const { last_page: lastPage, current_page: currentPage } = meta;
+    paginationView.renderPagination(lastPage, currentPage);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function controlPageChange(page) {
-  const { lastPage } = model.state;
+  try {
+    const { lastPage } = model.state;
 
-  if (page < 1) return;
-  if (page > lastPage) return;
-  if (page === model.state.currentPage) return;
+    if (page < 1) return;
+    if (page > lastPage) return;
+    if (page === model.state.currentPage) return;
 
-  model.state.currentPage = page;
-  const data = await model.fetchProducts(page);
-  const { current_page: currentPage } = data.meta;
-  productsView.renderItems(data.data);
-  paginationView.renderPagination(lastPage, currentPage);
+    model.state.currentPage = page;
+    const data = await model.fetchProducts(page);
+    const { current_page: currentPage } = data.meta;
+    productsView.renderItems(data.data);
+    paginationView.renderPagination(lastPage, currentPage);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 function initUserNavActions() {
@@ -58,33 +66,45 @@ function controlItemOptions(setting) {
 }
 
 async function controlFilter(values) {
-  const { from, to } = values;
-  model.state.filter.from = from;
-  model.state.filter.to = to;
+  try {
+    const { from, to } = values;
+    model.state.filter.from = from;
+    model.state.filter.to = to;
 
-  // Fetch the data
-  const data = await model.fetchProducts();
-  productsView.renderItems(data.data);
+    // Fetch the data
+    const data = await model.fetchProducts();
+    productsView.renderItems(data.data);
 
-  // Rerender pagination
-  const { lastPage } = model.state;
-  paginationView.renderPagination(lastPage, 1);
+    // Rerender pagination
+    const { lastPage } = model.state;
+    paginationView.renderPagination(lastPage, 1);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function controlSort(sortOption) {
-  model.state.sort = sortOption;
-  const data = await model.fetchProducts();
-  productsView.renderItems(data.data);
-  const { lastPage } = model.state;
-  paginationView.renderPagination(lastPage, 1);
-  console.log(data);
+  try {
+    model.state.sort = sortOption;
+    const data = await model.fetchProducts();
+    productsView.renderItems(data.data);
+    const { lastPage } = model.state;
+    paginationView.renderPagination(lastPage, 1);
+    console.log(data);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function controlShowListing(item) {
-  const { id } = item.dataset;
-  const productData = await model.fetchItem(id);
+  try {
+    const { id } = item.dataset;
+    const productData = await model.fetchItem(id);
 
-  await listingView.showListing(productData);
+    await listingView.showListing(productData);
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 function init() {
