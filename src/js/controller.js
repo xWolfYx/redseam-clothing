@@ -37,6 +37,7 @@ class Controller {
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
     listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
     listingView.addHandlerToggleListing(this.controlToggleListing.bind(this));
+    listingView.addHandlerListImgChange(this.controlListImgChange.bind(this));
   }
 
   controlForm() {
@@ -119,6 +120,10 @@ class Controller {
   controlToggleListing(listingState) {
     if (listingState === "show") listingView.showListing();
     if (listingState === "hide") listingView.hideListing();
+  }
+
+  controlListImgChange(targetImg) {
+    listingView.changeListingImage(targetImg);
   }
 
   async #fetchAndRenderProducts(page = model.state.currentPage) {

@@ -14,11 +14,18 @@ class ListingView extends View {
 
   addHandlerToggleListing(handler) {
     document.addEventListener("click", (e) => {
-      const listingContainer =
-        e.target.classList.contains("top-nav");
+      const listingContainer = e.target.classList.contains("top-nav");
       const productCard = e.target.closest(".product-card");
       if (productCard) handler("show");
       else if (listingContainer) handler("hide");
+    });
+  }
+
+  addHandlerListImgChange(handler) {
+    document.addEventListener("click", (e) => {
+      const targetImg = e.target.closest("img");
+      if (!targetImg || !targetImg.closest(".listing-other-imgs")) return;
+      handler(targetImg);
     });
   }
 
@@ -114,6 +121,11 @@ class ListingView extends View {
     const listingContainer = document.querySelector(".listing-container");
     listingContainer.classList.add("hidden");
     shopList.classList.remove("hidden");
+  }
+
+  changeListingImage(targetImg) {
+    const coverImg = document.querySelector(".listing-cover-img");
+    coverImg.setAttribute("src", targetImg.getAttribute("src"));
   }
 }
 
