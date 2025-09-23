@@ -38,6 +38,7 @@ class Controller {
     listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
     listingView.addHandlerToggleListing(this.controlToggleListing.bind(this));
     listingView.addHandlerListImgChange(this.controlListImgChange.bind(this));
+    listingView.addHandlerSetItemColor(this.controlSetItemColor.bind(this));
   }
 
   controlForm() {
@@ -122,8 +123,13 @@ class Controller {
     if (listingState === "hide") listingView.hideListing();
   }
 
-  controlListImgChange(targetImg) {
-    listingView.changeListingImage(targetImg);
+  controlListImgChange(targetImg, colorNum) {
+    listingView.changeListingImage(targetImg, colorNum);
+  }
+
+  controlSetItemColor(colorBtn, colorNum) {
+    listingView.setItemColor(colorBtn);
+    listingView.changeListingImage(undefined, colorNum);
   }
 
   async #fetchAndRenderProducts(page = model.state.currentPage) {

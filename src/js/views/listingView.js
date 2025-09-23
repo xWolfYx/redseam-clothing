@@ -29,6 +29,16 @@ class ListingView extends View {
     });
   }
 
+  addHandlerSetItemColor(handler) {
+    document.addEventListener("click", (e) => {
+      const colorBtn = e.target.closest("button");
+      if (!colorBtn || !colorBtn.closest(".color-btns")) return;
+
+      const { colorNum } = colorBtn.dataset;
+      handler(colorBtn, +colorNum);
+    });
+  }
+
   renderListing(productData) {
     // Data from the API
 
@@ -63,14 +73,17 @@ class ListingView extends View {
       .map((img) => `<img src="${img}" alt="Other image">`)
       .join("");
 
+    const colorSpan = document.querySelector(".color");
+    colorSpan.textContent = "Choose color:";
+
     const priceEl = document.querySelector(".listing-price");
     priceEl.textContent = `$ ${price}`;
 
     const colorsContainer = document.querySelector(".color-btns");
     colorsContainer.innerHTML = availableColors
       .map(
-        (color) =>
-          `<button data-color="color" style="background-color: ${color.toLowerCase()}" class="color-btn"></button>`,
+        (color, i) =>
+          `<button data-color="${color}" data-color-num="${i}" style="background-color: ${color.toLowerCase()}" class="color-btn"></button>`,
       )
       .join("");
 
@@ -123,9 +136,26 @@ class ListingView extends View {
     shopList.classList.remove("hidden");
   }
 
-  changeListingImage(targetImg) {
+  changeListingImage(targetImg, colorNum) {
+    const listingImgContainer = document.querySelector(".listing-other-imgs");
+    const listingImgs = [...listingImgContainer.children];
+    const listingImgSrc = listingImgs.map((img) => img.getAttribute("src"));
     const coverImg = document.querySelector(".listing-cover-img");
-    coverImg.setAttribute("src", targetImg.getAttribute("src"));
+
+    if (targetImg && colorNum === undefined)
+      coverImg.setAttribute("src", targetImg.getAttribute("src"));
+    if (colorNum !== undefined && !targetImg)
+      coverImg.setAttribute("src", listingImgSrc[colorNum]);
+  }
+
+  setItemColor(colorBtn) {
+    const colorBtnsContainer = document.querySelector(".color-btns");
+    const allBtns = colorBtnsContainer.children;
+    const colorSpan = document.querySelector(".color");
+
+    [...allBtns].forEach((btn) => btn.classList.remove("active"));
+    colorBtn.classList.add("active");
+    colorSpan.textContent = `Color: ${colorBtn.dataset.color}`;
   }
 }
 
