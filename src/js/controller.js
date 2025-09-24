@@ -4,6 +4,7 @@ import productsView from "./views/productsView.js";
 import paginationView from "./views/paginationView.js";
 import productSettingsView from "./views/productSettingsView.js";
 import listingView from "./views/listingView.js";
+import cartView from "./views/cartView.js";
 
 class Controller {
   constructor() {
@@ -32,6 +33,8 @@ class Controller {
     productSettingsView.addHandlerSettingsRender(
       this.controlItemOptions.bind(this),
     );
+
+    cartView.renderCartUI();
 
     productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
