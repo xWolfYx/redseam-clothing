@@ -16,6 +16,21 @@ class CartView {
       </div>
       <button class="start-shopping-btn">Start shopping</button>`;
   }
+
+  toggleCart() {
+    const cartWrapper = document.querySelector(".cart-wrapper");
+    const cartCloseBtn = document.querySelector(".cart-close-btn");
+    cartCloseBtn.addEventListener("click", () => {
+      this._parent.classList.remove("open");
+      cartWrapper.classList.add("hidden");
+    });
+
+    if (cartWrapper.classList.contains("hidden")) {
+      cartWrapper.classList.remove("hidden");
+      this._parent.classList.add("open");
+    }
+    console.log("Cart opened");
+  }
 }
 
 export default new CartView();

@@ -30,7 +30,7 @@ class Controller {
 
     document
       .querySelector(".nav-container")
-      .addEventListener("click", this.initUserNavActions.bind(this));
+      .addEventListener("click", this.controlUserNavActions.bind(this));
     productSettingsView.addHandlerSettingsRender(
       this.controlItemOptions.bind(this),
     );
@@ -87,9 +87,9 @@ class Controller {
     }
   }
 
-  initUserNavActions() {
+  controlUserNavActions() {
     const { isLoggedIn } = model.state;
-    if (isLoggedIn) return;
+    if (isLoggedIn) cartView.toggleCart();
     else location.hash = "#login";
   }
 
