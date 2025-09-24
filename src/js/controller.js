@@ -49,8 +49,11 @@ class Controller {
     const { isLoggedIn } = model.state;
     if (isLoggedIn) return;
 
-    if (location.hash === "#login" || location.hash === "#register")
+    if (location.hash === "#login" || location.hash === "#register") {
       loginView.renderForm();
+    } else {
+      loginView.hideForm();
+    }
   }
 
   controlFormSubmit(credentials) {

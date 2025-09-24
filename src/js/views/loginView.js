@@ -33,11 +33,6 @@ class LoginView extends View {
     const mainContainer = document.querySelector(".main-container");
     const loginForm = document.querySelector(".login-form");
 
-    let loginType;
-
-    if (location.hash === "#login") loginType = "Log in";
-    if (location.hash === "#register") loginType = "Registration";
-
     if (location.hash === "#login" || location.hash === "#register") {
       shopContainer.classList.add("hidden");
       mainContainer.classList.add("login");
@@ -49,22 +44,17 @@ class LoginView extends View {
     }
 
     if (location.hash === "#login") {
-      const html = `
-          <h1>${loginType}</h1>
-          <div class="input-fields">
-            <input type="email" placeholder="Email" name="email" autocomplete="on">
-            <input type="password" placeholder="Password" name="password" required>
-          </div>
-          <div class="action-fields">
-            <input type="submit" value="Log in">
-            <p>Not a member? <a href="#register">Register</a></p>
-          </div>`;
-      loginForm.innerHTML = html;
+      loginForm.innerHTML = this.renderLoginForm();
     }
 
     if (location.hash === "#register") {
-      const html = `
-          <h1>${loginType}</h1>
+      loginForm.innerHTML = this.renderRegisterForm();
+    }
+  }
+
+  renderRegisterForm() {
+    return `
+          <h1>Register</h1>
           <div class="input-fields">
             <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on">
             <input type="email" name="email" placeholder="Email" autocomplete="on">
@@ -75,8 +65,23 @@ class LoginView extends View {
             <input type="submit" value="Log in">
             <p>Already member? <a href="#login">Log in</a></p>
           </div>`;
-      loginForm.innerHTML = html;
-    }
+  }
+
+  renderLoginForm() {
+    return `
+          <h1>Log in</h1>
+          <div class="input-fields">
+            <input type="email" placeholder="Email" name="email" autocomplete="on">
+            <input type="password" placeholder="Password" name="password" required>
+          </div>
+          <div class="action-fields">
+            <input type="submit" value="Log in">
+            <p>Not a member? <a href="#register">Register</a></p>
+          </div>`;
+  }
+
+  hideForm() {
+    this._parent.classList.add("hidden");
   }
 
   setNavContainerContent(isLoggedIn, userImg) {
