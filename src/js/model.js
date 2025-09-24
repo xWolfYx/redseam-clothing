@@ -1,8 +1,9 @@
 import { API_URL } from "./config.js";
+import { setCartKey } from "./views/helpers.js";
 
 export const state = {
   userInfo: {},
-  // isLoggedIn: checkToken(),
+  isLoggedIn: checkToken(),
   currentPage: 1,
   lastPage: 1,
   filter: {
@@ -10,11 +11,12 @@ export const state = {
     to: "",
   },
   sort: "",
+  cart: {},
 };
 
-// function checkToken() {
-//   return localStorage.getItem("redberryAuthentication") ? true : false;
-// }
+function checkToken() {
+  return !!localStorage.getItem("redberryAuthentication");
+}
 
 /*
 Checks if a user is logged in by looking for a token in localStorage.
@@ -43,6 +45,7 @@ export async function login(credentials) {
     const userInfo = await loginRequest.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
+    return true;
   } catch (err) {
     console.log(err.message);
   }
@@ -107,7 +110,7 @@ export async function fetchProducts() {
 
 export async function fetchItem(id) {
   try {
-    const res = await fetch(`${API_URL}/products/${id}}`, {
+    const res = await fetch(`${API_URL}/products/${id}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -117,5 +120,39 @@ export async function fetchItem(id) {
     return response;
   } catch (err) {
     console.log(err.message);
+  }
+}
+
+export async function addToCart(id, itemData) {
+  console.log(id, itemData);
+  try {
+    const token = localStorage.getItem("redberryAuthentication");
+
+    const res = await fetch(
+      `https://api.redseam.redberryinternship.ge/api/cart/products/${id}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(itemData),
+      },
+    );
+    if (!res.ok) throw new Error("Couldn't add item to the cart");
+
+    const response = await res.json();
+
+    const key = setCartKey(id, itemData.color, itemData.size);
+    if (state.cart[key]) {
+      state.cart[key].quantity += itemData.quantity;
+    } else {
+      state.cart[key] = { ...itemData };
+    }
+    console.log(state);
+    return response;
+  } catch (err) {
+    console.log(err);
   }
 }

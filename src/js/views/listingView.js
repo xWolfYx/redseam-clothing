@@ -2,7 +2,7 @@ import View from "./View.js";
 import * as icon from "./icons.js";
 
 class ListingView extends View {
-  _parent = document.querySelectorAll(".shop-list");
+  _parent = document.querySelector(".listing-container");
 
   addHandlerRenderListing(handler) {
     document.addEventListener("click", (e) => {
@@ -52,6 +52,7 @@ class ListingView extends View {
     // Data from the API
 
     const {
+      id,
       name,
       description,
       cover_image: coverImg,
@@ -66,6 +67,8 @@ class ListingView extends View {
     const { image: brandImg, name: brandName } = brand;
 
     // DOM elements
+
+    this._parent.setAttribute("data-id", id);
 
     const nameEl = document.querySelector(".listing-name");
     nameEl.textContent = name;
@@ -136,15 +139,13 @@ class ListingView extends View {
 
   showListing() {
     const shopList = document.querySelector(".shop-list");
-    const listingContainer = document.querySelector(".listing-container");
-    listingContainer.classList.remove("hidden");
+    this._parent.classList.remove("hidden");
     shopList.classList.add("hidden");
   }
 
   hideListing() {
     const shopList = document.querySelector(".shop-list");
-    const listingContainer = document.querySelector(".listing-container");
-    listingContainer.classList.add("hidden");
+    this._parent.classList.add("hidden");
     shopList.classList.remove("hidden");
   }
 
@@ -179,6 +180,22 @@ class ListingView extends View {
     [...allBtns].forEach((btn) => btn.classList.remove("active"));
     sizeBtn.classList.add("active");
     sizeSpan.textContent = `Size: ${sizeBtn.dataset.size}`;
+  }
+
+  getItemData() {
+    const listItemParameters = document.querySelector(".listing-parameters");
+    const dataArr = new FormData(listItemParameters);
+
+    const id = this._parent.getAttribute("data-id");
+    const quantity = +dataArr.get("quantity");
+    const colorBtn = document.querySelector(".color-btn.active");
+    const sizeBtn = document.querySelector(".size-btn.active");
+
+    const color = colorBtn ? colorBtn.dataset.color : null;
+    const size = sizeBtn ? sizeBtn.dataset.size : null;
+
+    const itemData = { id, specs: { color, size, quantity } };
+    return itemData;
   }
 }
 

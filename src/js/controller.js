@@ -37,6 +37,7 @@ class Controller {
 
     cartView.renderCartUI();
 
+    cartView.addHandlerAddToCart(this.controlAddToCart.bind(this));
     productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
     listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
@@ -146,6 +147,13 @@ class Controller {
 
   controlSetItemSize(sizeBtn) {
     listingView.setItemSize(sizeBtn);
+  }
+
+  controlAddToCart() {
+    const data = listingView.getItemData();
+    const { id, specs: itemData } = data;
+    console.log(data);
+    model.addToCart(id, itemData);
   }
 
   async #fetchAndRenderProducts(page = model.state.currentPage) {

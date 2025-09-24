@@ -2,6 +2,12 @@ import * as icon from "./icons";
 
 class CartView {
   _parent = document.querySelector(".cart");
+
+  addHandlerAddToCart(handler) {
+    const addToCartBtn = document.querySelector(".listing-add-to-cart-btn");
+    addToCartBtn.addEventListener("click", handler);
+  }
+
   renderCartUI() {
     // if nothing is in the cart
     this._parent.innerHTML = `
