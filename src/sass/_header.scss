@@ -1,3 +1,5 @@
+@use "mixin";
+
 .top-nav {
   display: flex;
   align-items: center;
@@ -7,9 +9,7 @@
 }
 
 .nav-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixin.flex-center;
   cursor: pointer;
 
   gap: 20px;
@@ -21,9 +21,7 @@
 }
 
 .user-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixin.flex-center;
   gap: 8px;
   & > img {
     width: 20px;

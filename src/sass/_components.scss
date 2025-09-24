@@ -1,4 +1,5 @@
 @use "_colors";
+@use "mixin";
 
 .product-list-header {
   display: flex;
@@ -55,18 +56,14 @@
 // Pagination
 
 .page-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixin.flex-center;
   margin-top: 90px;
   margin-bottom: 216px;
   gap: 8px;
 }
 
 .page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixin.flex-center;
   width: 32px;
   height: 32px;
   border: 1px solid colors.$grey;
@@ -101,9 +98,7 @@
 
 .filter-settings-btn,
 .sort-settings-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include mixin.flex-center;
   cursor: pointer;
   background-color: transparent;
   border: none;

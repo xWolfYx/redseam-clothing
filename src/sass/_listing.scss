@@ -1,4 +1,5 @@
 @use "_colors";
+@use "mixin";
 
 .listing-container {
   display: flex;
@@ -134,9 +135,7 @@
 }
 
 .listing-add-to-cart-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include mixin.flex-center;
   gap: 10px;
   cursor: pointer;
   border: none;

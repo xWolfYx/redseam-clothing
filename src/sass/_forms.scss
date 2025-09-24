@@ -1,4 +1,5 @@
 @use "_colors";
+@use "mixin";
 
 .login-form,
 .registration-form {
@@ -33,10 +34,8 @@
 }
 
 .action-fields {
-  display: flex;
+  @include mixin.flex-center();
   flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
   gap: 24px;
 
   input {
