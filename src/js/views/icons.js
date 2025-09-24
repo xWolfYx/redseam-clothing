@@ -12,6 +12,8 @@ import cart from "url:../../img/cart.svg";
 import cartWhite from "url:../../img/cart-white.svg";
 import loginImg from "url:../../img/login-img.webp";
 import defaultUserImg from "url:../../img/default-user-img.png";
+import xMark from "url:../../img/x-mark.svg";
+import emptyCart from "url:../../img/empty-cart.svg";
 
 export {
   adjustmentsHor,
@@ -23,4 +25,6 @@ export {
   cart,
   cartWhite,
   defaultUserImg,
+  xMark,
+  emptyCart,
 };
