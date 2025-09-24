@@ -14,6 +14,7 @@ import loginImg from "url:../../img/login-img.webp";
 import defaultUserImg from "url:../../img/default-user-img.png";
 import xMark from "url:../../img/x-mark.svg";
 import emptyCart from "url:../../img/empty-cart.svg";
+import passwordEye from "url:../../img/password-eye.svg";
 
 export {
   adjustmentsHor,
@@ -27,4 +28,5 @@ export {
   defaultUserImg,
   xMark,
   emptyCart,
+  passwordEye,
 };
