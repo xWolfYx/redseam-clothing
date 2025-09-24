@@ -22,10 +22,7 @@ class LoginView extends View {
   addHandlerPasswordDisplay(handler) {
     this._parent.addEventListener("click", (e) => {
       if (!e.target.closest(".password-eye")) return;
-      else {
-        e.preventDefault();
-        handler(e.target.closest("button"));
-      }
+      handler(e.target.closest("button"));
     });
   }
 
@@ -66,15 +63,15 @@ class LoginView extends View {
     return `
           <h1>Register</h1>
           <div class="input-fields">
-            <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on">
-            <input type="email" name="email" placeholder="Email" autocomplete="on">
+            <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on" required>
+            <input type="email" name="email" placeholder="Email" autocomplete="on" required>
             <div class="password-field">
               <input type="password" name="password" placeholder="Password" minlength="3" required>
-              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+              <button type="button" class="password-eye"><img src="${icon.passwordEye}"></button>
             </div>
             <div class="password-field">
               <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+              <button type="button" class="password-eye"><img src="${icon.passwordEye}"></button>
             </div>
           </div>
           <div class="action-fields">
@@ -87,10 +84,10 @@ class LoginView extends View {
     return `
           <h1>Log in</h1>
           <div class="input-fields">
-            <input type="email" placeholder="Email" name="email" autocomplete="on">
+            <input type="email" placeholder="Email" name="email" autocomplete="on" required>
             <div class="password-field">
               <input type="password" placeholder="Password" name="password" required>
-              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+              <button type="button" class="password-eye"><img src="${icon.passwordEye}"></button>
             </div>
           </div>
           <div class="action-fields">
@@ -123,7 +120,6 @@ class LoginView extends View {
   }
 
   togglePasswordDisplay(btn) {
-    console.log(btn);
     const input = btn.previousElementSibling;
 
     input.type = input.type === "password" ? "text" : "password";
