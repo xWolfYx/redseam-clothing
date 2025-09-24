@@ -82,11 +82,11 @@ class ListingView extends View {
       .map((img) => `<img src="${img}" alt="Other image">`)
       .join("");
 
-    const colorSpan = document.querySelector(".color");
-    colorSpan.textContent = "Choose color:";
-
     const priceEl = document.querySelector(".listing-price");
     priceEl.textContent = `$ ${price}`;
+
+    const colorSpan = document.querySelector(".color");
+    colorSpan.textContent = "Choose color:";
 
     const colorsContainer = document.querySelector(".color-btns");
     colorsContainer.innerHTML = availableColors
@@ -95,6 +95,9 @@ class ListingView extends View {
           `<button data-color="${color}" data-color-num="${i}" style="background-color: ${color.toLowerCase()}" class="color-btn"></button>`,
       )
       .join("");
+
+    const sizeSpan = document.querySelector(".size");
+    sizeSpan.textContent = "Choose size:";
 
     const sizesContainer = document.querySelector(".size-btns");
     sizesContainer.innerHTML = availableSizes
@@ -175,7 +178,7 @@ class ListingView extends View {
 
     [...allBtns].forEach((btn) => btn.classList.remove("active"));
     sizeBtn.classList.add("active");
-    sizeSpan.textContent = `Color: ${sizeBtn.dataset.size}`;
+    sizeSpan.textContent = `Size: ${sizeBtn.dataset.size}`;
   }
 }
 
