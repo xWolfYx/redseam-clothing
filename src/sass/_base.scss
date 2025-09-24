@@ -20,7 +20,8 @@
   color: colors.$dark-blue-primary;
 }
 
-.container {
+html {
+  scroll-behavior: smooth;
 }
 
 .main-container {
