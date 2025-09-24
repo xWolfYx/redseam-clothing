@@ -19,6 +19,7 @@ class Controller {
     loginView.addHandlerSubmitForm((credentials) =>
       this.controlFormSubmit(credentials),
     );
+    loginView.addHandlerPasswordDisplay(this.controlPasswordDisplay);
 
     productsView.addHandlerShowProducts(
       this.renderItemCount.bind(this),
@@ -54,6 +55,10 @@ class Controller {
     } else {
       loginView.hideForm();
     }
+  }
+
+  controlPasswordDisplay(btn) {
+    loginView.togglePasswordDisplay(btn);
   }
 
   controlFormSubmit(credentials) {

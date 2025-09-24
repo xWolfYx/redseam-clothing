@@ -19,6 +19,16 @@ class LoginView extends View {
     );
   }
 
+  addHandlerPasswordDisplay(handler) {
+    this._parent.addEventListener("click", (e) => {
+      if (!e.target.closest(".password-eye")) return;
+      else {
+        e.preventDefault();
+        handler(e.target.closest("button"));
+      }
+    });
+  }
+
   addHandlerSubmitForm(handler) {
     window.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -58,8 +68,14 @@ class LoginView extends View {
           <div class="input-fields">
             <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on">
             <input type="email" name="email" placeholder="Email" autocomplete="on">
-            <input type="password" name="password" placeholder="Password" minlength="3" required>
-            <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+            <div class="password-field">
+              <input type="password" name="password" placeholder="Password" minlength="3" required>
+              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+            </div>
+            <div class="password-field">
+              <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+            </div>
           </div>
           <div class="action-fields">
             <input type="submit" value="Log in">
@@ -72,7 +88,10 @@ class LoginView extends View {
           <h1>Log in</h1>
           <div class="input-fields">
             <input type="email" placeholder="Email" name="email" autocomplete="on">
-            <input type="password" placeholder="Password" name="password" required>
+            <div class="password-field">
+              <input type="password" placeholder="Password" name="password" required>
+              <button class="password-eye"><img src="${icon.passwordEye}"></button>
+            </div>
           </div>
           <div class="action-fields">
             <input type="submit" value="Log in">
@@ -101,6 +120,13 @@ class LoginView extends View {
       <p>Log in</p>
     </div>`;
     navContainer.innerHTML = userActions;
+  }
+
+  togglePasswordDisplay(btn) {
+    console.log(btn);
+    const input = btn.previousElementSibling;
+
+    input.type = input.type === "password" ? "text" : "password";
   }
 }
 
