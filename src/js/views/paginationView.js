@@ -56,6 +56,7 @@ class PaginationView extends View {
         return;
       }
       handler(page);
+      window.scrollTo(pageXOffset, 0);
     });
   }
 }
