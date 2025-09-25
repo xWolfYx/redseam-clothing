@@ -125,6 +125,8 @@ export async function fetchItem(id) {
 
 export async function addToCart(id, itemData) {
   try {
+    if (!state.isLoggedIn) return;
+
     const token = localStorage.getItem("redberryAuthentication");
 
     const res = await fetch(
