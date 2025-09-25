@@ -22,6 +22,19 @@
 
 html {
   scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: colors.$red;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    color: transparent;
+  }
 }
 
 .main-container {
