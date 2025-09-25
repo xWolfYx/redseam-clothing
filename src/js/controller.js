@@ -35,8 +35,6 @@ class Controller {
       this.controlItemOptions.bind(this),
     );
 
-    cartView.renderCartUI();
-
     cartView.addHandlerAddToCart(this.controlAddToCart.bind(this));
     productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
@@ -45,6 +43,8 @@ class Controller {
     listingView.addHandlerListImgChange(this.controlListImgChange.bind(this));
     listingView.addHandlerSetItemColor(this.controlSetItemColor.bind(this));
     listingView.addHandlerSetItemSize(this.controlSetItemSize.bind(this));
+
+    this.controlGetCartItems();
   }
 
   controlForm() {
@@ -154,6 +154,11 @@ class Controller {
     const { id, specs: itemData } = data;
     console.log(data);
     model.addToCart(id, itemData);
+  }
+
+  async controlGetCartItems() {
+    const cartItemData = await model.getCartContent();
+    cartView.renderCartUI(cartItemData);
   }
 
   async #fetchAndRenderProducts(page = model.state.currentPage) {

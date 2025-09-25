@@ -124,7 +124,6 @@ export async function fetchItem(id) {
 }
 
 export async function addToCart(id, itemData) {
-  console.log(id, itemData);
   try {
     const token = localStorage.getItem("redberryAuthentication");
 
@@ -140,7 +139,9 @@ export async function addToCart(id, itemData) {
         body: JSON.stringify(itemData),
       },
     );
+
     if (!res.ok) throw new Error("Couldn't add item to the cart");
+    if (res.status === 201) console.log("Item successfully added to the cart");
 
     const response = await res.json();
 
@@ -150,7 +151,32 @@ export async function addToCart(id, itemData) {
     } else {
       state.cart[key] = { ...itemData };
     }
-    console.log(state);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getCartContent() {
+  try {
+    const token = localStorage.getItem("redberryAuthentication");
+
+    const res = await fetch(
+      `https://api.redseam.redberryinternship.ge/api/cart`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (!res.ok) throw new Error("Couldn't get cart items");
+    if (res.status === 200) console.log("Cart items successfully fetched");
+
+    const response = await res.json();
+
     return response;
   } catch (err) {
     console.log(err);
