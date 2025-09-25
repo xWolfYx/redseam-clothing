@@ -37,6 +37,7 @@ class Controller {
 
     cartView.addHandlerAddToCart(this.controlAddToCart.bind(this));
     cartView.addHandlerRemoveFromCart(this.controlRemoveFromCart.bind(this));
+    cartView.addHandlerChangeItemCount(this.controlChangeItemCount.bind(this));
     productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
     listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
@@ -161,6 +162,12 @@ class Controller {
 
   async controlRemoveFromCart(id) {
     await model.removeFromCart(id);
+    const updatedCart = await model.getCartContent();
+    cartView.renderCartUI(updatedCart);
+  }
+
+  async controlChangeItemCount({ id, quantity, color, size }) {
+    await model.changeItemCount(id, quantity, color, size);
     const updatedCart = await model.getCartContent();
     cartView.renderCartUI(updatedCart);
   }

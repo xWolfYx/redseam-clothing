@@ -182,19 +182,42 @@ export async function getCartContent() {
   try {
     const token = localStorage.getItem("redberryAuthentication");
 
-    const res = await fetch(
-      `https://api.redseam.redberryinternship.ge/api/cart`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+    const res = await fetch(`${API_URL}/cart`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
 
     if (!res.ok) throw new Error("Couldn't get cart items");
     if (res.status === 200) console.log("Cart items successfully fetched");
+
+    const response = await res.json();
+
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function changeItemCount(id, quantity, color, size) {
+  try {
+    if (!state.isLoggedIn) return;
+
+    const token = localStorage.getItem("redberryAuthentication");
+
+    const res = await fetch(`${API_URL}/cart/products/${id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ quantity, color, size }),
+    });
+
+    if (!res.ok) throw new Error("Couldn't update cart items");
 
     const response = await res.json();
 
