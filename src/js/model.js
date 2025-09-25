@@ -129,18 +129,15 @@ export async function addToCart(id, itemData) {
 
     const token = localStorage.getItem("redberryAuthentication");
 
-    const res = await fetch(
-      `https://api.redseam.redberryinternship.ge/api/cart/products/${id}`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(itemData),
+    const res = await fetch(`${API_URL}/cart/products/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-    );
+      body: JSON.stringify(itemData),
+    });
 
     if (!res.ok) throw new Error("Couldn't add item to the cart");
     if (res.status === 201) console.log("Item successfully added to the cart");
@@ -154,6 +151,28 @@ export async function addToCart(id, itemData) {
       state.cart[key] = { ...itemData };
     }
     return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function removeFromCart(id) {
+  try {
+    if (!state.isLoggedIn) return;
+
+    const token = localStorage.getItem("redberryAuthentication");
+
+    const res = await fetch(`${API_URL}/cart/products/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) throw new Error("Couldn't remove item from the cart");
+    if (res.status === 200)
+      console.log("Item successfully deleted from the cart");
   } catch (err) {
     console.log(err);
   }

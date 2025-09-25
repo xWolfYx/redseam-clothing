@@ -36,6 +36,7 @@ class Controller {
     );
 
     cartView.addHandlerAddToCart(this.controlAddToCart.bind(this));
+    cartView.addHandlerRemoveFromCart(this.controlRemoveFromCart.bind(this));
     productSettingsView.addHandlerFilterItems(this.controlFilter.bind(this));
     productSettingsView.addHandlerSortItems(this.controlSort.bind(this));
     listingView.addHandlerRenderListing(this.controlRenderListing.bind(this));
@@ -149,11 +150,19 @@ class Controller {
     listingView.setItemSize(sizeBtn);
   }
 
-  controlAddToCart() {
+  async controlAddToCart() {
     const data = listingView.getItemData();
     const { id, specs: itemData } = data;
-    console.log(data);
-    model.addToCart(id, itemData);
+    await model.addToCart(id, itemData);
+
+    const updatedCart = await model.getCartContent();
+    cartView.renderCartUI(updatedCart);
+  }
+
+  async controlRemoveFromCart(id) {
+    await model.removeFromCart(id);
+    const updatedCart = await model.getCartContent();
+    cartView.renderCartUI(updatedCart);
   }
 
   async controlGetCartItems() {
