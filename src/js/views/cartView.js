@@ -62,7 +62,7 @@ class CartView {
       <div class="item-price">
         <span class="items-subtotal">Items subtotal</span><span class="items-subtotal-price"span>$ ${totalItemPrice}</span>
         <span class="delivery">Delivery</span><span class="delivery-price"span>$ ${deliveryPrice}</span>
-        <span class="total">Total</span><class="total-price"span>$ ${totalItemPrice + deliveryPrice}</span>
+        <span class="total">Total</span><span class="total-price">$ ${totalItemPrice + deliveryPrice}</span>
       </div>
       <button class="go-to-checkout-btn">Go to checkout</button>`;
 
