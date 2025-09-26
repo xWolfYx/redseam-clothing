@@ -29,8 +29,6 @@ class CartView {
       const color = e.target.closest(".cart-item").dataset.color;
       const size = e.target.closest(".cart-item").dataset.size;
 
-      console.log(id, color, size);
-
       const decreaseBtn = e.target.closest(".decrease-quantity-btn");
       const increaseBtn = e.target.closest(".increase-quantity-btn");
 
@@ -114,23 +112,28 @@ class CartView {
       cartWrapper.classList.remove("hidden");
       this._parent.classList.add("open");
     }
-    console.log("Cart opened");
   }
 
   renderCartItems(data) {
-    console.log(data);
-    const cartIconPlus = `
-        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5.75 1.25C5.75 0.835786 5.41421 0.5 5 0.5C4.58579 0.5 4.25 0.835786 4.25 1.25V4.75H0.75C0.335786 4.75 0 5.08579 0 5.5C0 5.91421 0.335786 6.25 0.75 6.25L4.25 6.25V9.75C4.25 10.1642 4.58579 10.5 5 10.5C5.41421 10.5 5.75 10.1642 5.75 9.75V6.25L9.25 6.25C9.66421 6.25 10 5.91421 10 5.5C10 5.08579 9.66421 4.75 9.25 4.75H5.75V1.25Z" fill="#3E424A"/>
-        </svg>`;
-    const cartIconMinus = `
-        <svg width="10" height="3" viewBox="0 0 10 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.75 0.75C0.335786 0.75 0 1.08579 0 1.5C0 1.91421 0.335786 2.25 0.75 2.25L9.25 2.25C9.66421 2.25 10 1.91421 10 1.5C10 1.08579 9.66421 0.75 9.25 0.75H0.75Z" fill="#E1DFE1"/>
-        </svg>`;
+    const disabledBtnColor = "#E1DFE1";
+    const activeBtnColor = "#3E424A";
 
     return data
-      .map(
-        (item) => `
+      .map((item) => {
+        const isDisabled = item.quantity <= 1 ? true : false;
+
+        const cartIconPlus = `
+        <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.75 1.25C5.75 0.835786 5.41421 0.5 5 0.5C4.58579 0.5 4.25 0.835786 4.25 1.25V4.75H0.75C0.335786 4.75 0 5.08579 0 5.5C0 5.91421 0.335786 6.25 0.75 6.25L4.25 6.25V9.75C4.25 10.1642 4.58579 10.5 5 10.5C5.41421 10.5 5.75 10.1642 5.75 9.75V6.25L9.25 6.25C9.66421 6.25 10 5.91421 10 5.5C10 5.08579 9.66421 4.75 9.25 4.75H5.75V1.25Z"
+        fill="${activeBtnColor}"/>
+        </svg>`;
+        const cartIconMinus = `
+        <svg width="10" height="3" viewBox="0 0 10 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.75 0.75C0.335786 0.75 0 1.08579 0 1.5C0 1.91421 0.335786 2.25 0.75 2.25L9.25 2.25C9.66421 2.25 10 1.91421 10 1.5C10 1.08579 9.66421 0.75 9.25 0.75H0.75Z"
+        fill="${isDisabled ? disabledBtnColor : activeBtnColor}"/>
+        </svg>`;
+
+        return `
         <div class="cart-item" data-id="${item.id}" data-color="${item.color}" data-size="${item.size}">
           <img src="${item.cover_image}" alt="" class="cart-item-img">
           <div class="cart-item-info">
@@ -141,14 +144,14 @@ class CartView {
           </div>
           <div class="cart-item-actions">
             <div class="cart-item-quantity-selector">
-              <button class="decrease-quantity-btn">${cartIconMinus}</button>
+              <button class="decrease-quantity-btn" ${isDisabled ? "disabled" : ""}>${cartIconMinus}</button>
               <span>${item.quantity}</span>
               <button class="increase-quantity-btn">${cartIconPlus}</button>
             </div>
             <span class="cart-item-remove">Remove</span>
           </div>
-        </div>`,
-      )
+        </div>`;
+      })
       .join("");
   }
 }

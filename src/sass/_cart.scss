@@ -192,9 +192,14 @@
     width: 16px;
     border: none;
     background-color: transparent;
+
+    &:disabled {
+      cursor: auto;
+    }
   }
 
   & span {
+    cursor: default;
     font-size: 12px;
     text-align: center;
     width: 18px;
