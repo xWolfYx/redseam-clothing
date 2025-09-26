@@ -156,7 +156,7 @@ export async function addToCart(id, itemData) {
   }
 }
 
-export async function removeFromCart(id) {
+export async function removeFromCart(id, color, size) {
   try {
     if (!state.isLoggedIn) return;
 
@@ -166,8 +166,10 @@ export async function removeFromCart(id) {
       method: "DELETE",
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({ color, size }),
     });
 
     if (!res.ok) throw new Error("Couldn't remove item from the cart");

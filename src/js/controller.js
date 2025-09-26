@@ -160,8 +160,8 @@ class Controller {
     cartView.renderCartUI(updatedCart);
   }
 
-  async controlRemoveFromCart(id) {
-    await model.removeFromCart(id);
+  async controlRemoveFromCart(id, color, size) {
+    await model.removeFromCart(id, color, size);
     const updatedCart = await model.getCartContent();
     cartView.renderCartUI(updatedCart);
   }
