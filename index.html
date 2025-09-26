@@ -114,8 +114,57 @@
           <img src="src/img/login-img.webp" class="login-img">
           <form class="login-form" method="POST"></form>
         </div>
+        <div class="checkout-container">
+          <h1>Checkout</h1>
+          <div class="order-details">
+            <span>Order details</span>
+            <form>
+              <input type="text" name="name" class="name" placeholder="Name">
+              <input
+                type="text"
+                name="surname"
+                class="surname"
+                placeholder="Surname"
+              >
+              <input
+                type="email"
+                name="email"
+                class="email"
+                placeholder="Email"
+              >
+              <input
+                type="text"
+                name="address"
+                class="address"
+                placeholder="Address"
+              >
+              <input
+                type="number"
+                name="zip"
+                class="zip"
+                placeholder="Zip code"
+              >
+            </form>
+            <div class="checkout">
+              <div class="cart-overview"></div>
+              <button type="submit" value="Pay"></button>
+            </div>
+          </div>
+        </div>
         <div class="cart-wrapper hidden">
           <aside class="cart">
+            <span class="cart-item-count"></span>
+            <div class="cart-close-btn"></div>
+            <div class="cart-items"></div>
+            <div class="cart-price-summary">
+              <span class="items-subtotal">Items subtotal</span>
+              <span class="items-subtotal-price" span></span>
+              <span class="delivery">Delivery</span>
+              <span class="delivery-price" span></span>
+              <span class="total">Total</span>
+              <span class="total-price"></span>
+              <button class="go-to-checkout-btn">Go to checkout</button>
+            </div>
           </aside>
         </div>
       </main>

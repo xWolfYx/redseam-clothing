@@ -11,13 +11,14 @@ class CartView {
   addHandlerRemoveFromCart(handler) {
     document.addEventListener("click", (e) => {
       if (!e.target.classList.contains("cart-item-remove")) return;
-      const itemId = e.target.closest(".cart-item").dataset.id;
-      if (!itemId) return;
-      else handler(+itemId);
+
+      const itemID = e.target.closest(".cart-item").dataset.id;
+      const itemColor = e.target.closest(".cart-item").dataset.color;
+      const itemSize = e.target.closest(".cart-item").dataset.size;
+
+      handler(+itemID, itemColor, itemSize);
     });
   }
-
-  // addHandlerRenderCartItems() {}
 
   addHandlerChangeItemCount(handler) {
     document.addEventListener("click", (e) => {
@@ -46,6 +47,15 @@ class CartView {
   }
 
   renderCartUI(data) {
+    const cartItemCount = document.querySelector(".cart-item-count");
+    const cartCloseBtn = document.querySelector(".cart-close-btn");
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const cartPriceSummary = document.querySelector(".cart-price-summary");
+    const goToCheckoutBtn = document.querySelector(".go-to-checkout-btn");
+    const itemSubtotalPriceEl = document.querySelector(".items-subtotal-price");
+    const deliveryPriceEl = document.querySelector(".delivery-price");
+    const totalPriceEl = document.querySelector(".total-price");
+
     const totalItemPrice = data.reduce(
       (acc, item) => (acc += item.total_price),
       0,
@@ -53,40 +63,30 @@ class CartView {
 
     const deliveryPrice = 5;
 
+    cartItemCount.textContent = `Shopping cart (${data.length})`;
+    cartCloseBtn.innerHTML = `<img src="${icon.xMark}">`;
+
     if (data.length <= 0) {
-      this._parent.innerHTML = `
-      <span class="cart-item-count">Shopping cart (0)</span>
-      <div class="cart-close-btn">
-        <img src="${icon.xMark}">
-      </div>
-      <div class="empty-cart-notice">
-        <img src="${icon.emptyCart}">
-        <span class="cart-msg-1">Ooops!</span>
-        <span class="cart-msg-2">You've got nothing in your cart just yet...</span>
-      </div>
-      <button class="start-shopping-btn">Start shopping</button>`;
+      cartPriceSummary.classList.add("hidden");
+      goToCheckoutBtn.classList.add("hidden");
+
+      cartItemsContainer.innerHTML = `
+              <div class="empty-cart-notice">
+                <img src="${icon.emptyCart}">
+                <span class="cart-msg-1">Ooops!</span>
+                <span class="cart-msg-2">You've got nothing in your cart just yet...</span>
+                <button class="start-shopping-btn">Start shopping</button>
+                </div>`;
       return;
     }
 
-    const html = `
-      <span class="cart-item-count">Shopping cart (${data.length})</span>
-      <div class="cart-close-btn">
-        <img src="${icon.xMark}">
-      </div>
-        <div class="cart-items">
-          ${this.renderCartItems(data)}
-        </div>
-      <div class="item-price">
-        <span class="items-subtotal">Items subtotal</span>
-        <span class="items-subtotal-price" span>$ ${totalItemPrice}</span>
-        <span class="delivery">Delivery</span>
-        <span class="delivery-price" span>$ ${deliveryPrice}</span>
-        <span class="total">Total</span>
-        <span class="total-price">$ ${totalItemPrice + deliveryPrice}</span>
-      </div>
-      <button class="go-to-checkout-btn">Go to checkout</button>`;
+    cartPriceSummary.classList.remove("hidden");
+    goToCheckoutBtn.classList.remove("hidden");
 
-    this._parent.innerHTML = html;
+    cartItemsContainer.innerHTML = this.renderCartItems(data);
+    itemSubtotalPriceEl.textContent = `$ ${totalItemPrice}`;
+    deliveryPriceEl.textContent = `$ ${deliveryPrice}`;
+    totalPriceEl.textContent = `$ ${totalItemPrice + deliveryPrice}`;
   }
 
   toggleCart() {
