@@ -51,7 +51,6 @@ class ProductSettingsView extends View {
     if (filterContainer.classList.contains("hidden")) {
       filterContainer.classList.remove("hidden");
       const firstInput = filterContainer.querySelector(`input[name="from"]`);
-      console.log(firstInput);
       firstInput.focus();
     } else filterContainer.classList.add("hidden");
   }
