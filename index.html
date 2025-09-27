@@ -116,9 +116,9 @@
         </div>
         <div class="checkout-container">
           <h1>Checkout</h1>
-          <div class="order-details">
-            <span>Order details</span>
-            <form>
+          <form class="checkout-form">
+            <div class="order-details">
+              <span>Order details</span>
               <input type="text" name="name" class="name" placeholder="Name">
               <input
                 type="text"
@@ -144,11 +144,11 @@
                 class="zip"
                 placeholder="Zip code"
               >
-            </form>
-            <div class="checkout">
-              <div class="cart-overview"></div>
-              <button type="submit" value="Pay"></button>
             </div>
+          </form>
+          <div class="checkout">
+            <div class="cart-overview"></div>
+            <button type="submit" value="Pay"></button>
           </div>
         </div>
         <div class="cart-wrapper hidden">
