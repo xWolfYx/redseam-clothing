@@ -46,7 +46,7 @@ class Controller {
     listingView.addHandlerSetItemColor(this.controlSetItemColor.bind(this));
     listingView.addHandlerSetItemSize(this.controlSetItemSize.bind(this));
 
-    this.controlGetCartItems();
+    if (isLoggedIn) this.controlGetCartItems();
   }
 
   controlForm() {
