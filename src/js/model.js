@@ -29,7 +29,7 @@ export async function login(credentials) {
   try {
     // Check user credentials
     const { email, password } = credentials;
-    const loginRequest = await fetch(`${API_URL}/login`, {
+    const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -37,15 +37,17 @@ export async function login(credentials) {
       },
       body: JSON.stringify({ email, password }),
     });
+
     // Failure
-    if (!loginRequest.ok) {
+    if (!res.ok) {
       throw new Error("Wrong credentials!");
     }
+
     // Success
-    const userInfo = await loginRequest.json();
+    const userInfo = await res.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
-    return true;
+    return res;
   } catch (err) {
     console.log(err.message);
   }
