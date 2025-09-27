@@ -133,8 +133,6 @@ class ListingView extends View {
 
     const brandNameEl = document.querySelector(".brand-name");
     brandNameEl.textContent = `Brand: ${brandName}`;
-
-    console.log(productData);
   }
 
   showListing() {
@@ -172,7 +170,6 @@ class ListingView extends View {
   }
 
   setItemSize(sizeBtn) {
-    console.log(sizeBtn);
     const sizeBtnsContainer = document.querySelector(".size-btns");
     const allBtns = sizeBtnsContainer.children;
     const sizeSpan = document.querySelector(".size");
