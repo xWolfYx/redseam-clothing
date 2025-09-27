@@ -2,6 +2,9 @@ import * as icon from "./icons";
 
 class CartView {
   _parent = document.querySelector(".cart");
+  _deliveryPrice = 5;
+  _disabledBtnColor = "#E1DFE1";
+  _activeBtnColor = "#3E424A";
 
   addHandlerAddToCart(handler) {
     const addToCartBtn = document.querySelector(".listing-add-to-cart-btn");
