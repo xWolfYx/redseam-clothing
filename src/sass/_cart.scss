@@ -221,7 +221,8 @@
   grid-template-columns: 70% auto;
   justify-content: space-between;
   gap: 16px;
-  max-width: 460px;
+  width: 100%;
+  margin-top: 41px;
 
   &.hidden {
     display: none;
