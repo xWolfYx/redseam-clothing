@@ -157,6 +157,48 @@ class CartView {
       })
       .join("");
   }
+
+  renderCartPrice(data) {
+    const totalItemPrice = data.reduce(
+      (acc, item) => (acc += item.total_price),
+      0,
+    );
+
+    const cartPriceSummaryDiv = document.querySelector(".cart-price-summary");
+
+    const itemsSubtotalSpan = document.createElement("span");
+    itemsSubtotalSpan.classList.add("items-subtotal");
+    itemsSubtotalSpan.textContent = "Items subtotal";
+
+    const itemSubtotalPriceSpan = document.createElement("span");
+    itemSubtotalPriceSpan.classList.add("items-subtotal-price");
+    itemSubtotalPriceSpan.textContent = `$ ${totalItemPrice}`;
+
+    const deliverySpan = document.createElement("span");
+    deliverySpan.classList.add("delivery");
+    deliverySpan.textContent = "Delivery";
+
+    const deliveryPriceSpan = document.createElement("span");
+    deliveryPriceSpan.classList.add("delivery-price");
+    deliveryPriceSpan.textContent = `$ ${this._deliveryPrice}`;
+
+    const totalSpan = document.createElement("span");
+    totalSpan.classList.add("total");
+    totalSpan.textContent = "Total";
+
+    const totalPriceSpan = document.createElement("span");
+    totalPriceSpan.classList.add("total-price");
+    totalPriceSpan.textContent = `$ ${totalItemPrice + this._deliveryPrice}`;
+
+    cartPriceSummaryDiv.append(
+      itemsSubtotalSpan,
+      itemSubtotalPriceSpan,
+      deliverySpan,
+      deliveryPriceSpan,
+      totalSpan,
+      totalPriceSpan,
+    );
+  }
 }
 
 export default new CartView();
