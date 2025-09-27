@@ -199,6 +199,21 @@ class CartView {
       totalPriceSpan,
     );
   }
+
+  updateCartPrice(data) {
+    const totalItemPrice = data.reduce(
+      (acc, item) => (acc += item.total_price),
+      0,
+    );
+
+    const itemSubtotalPriceSpan = document.querySelector(
+      ".items-subtotal-price",
+    );
+    itemSubtotalPriceSpan.textContent = `$ ${totalItemPrice}`;
+
+    const totalPriceSpan = document.querySelector(".total-price");
+    totalPriceSpan.textContent = `$ ${totalItemPrice + this._deliveryPrice}`;
+  }
 }
 
 export default new CartView();
