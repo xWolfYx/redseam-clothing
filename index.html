@@ -140,7 +140,7 @@
               >
               <input
                 type="number"
-                name="zip"
+                name="zip_code"
                 class="zip"
                 placeholder="Zip code"
               >
@@ -148,7 +148,17 @@
           </form>
           <div class="checkout">
             <div class="cart-overview"></div>
-            <button type="submit" value="Pay"></button>
+            <div class="cart-price-summary">
+              <span class="items-subtotal">Items subtotal</span>
+              <span class="items-subtotal-price" span></span>
+              <span class="delivery">Delivery</span>
+              <span class="delivery-price" span></span>
+              <span class="total">Total</span>
+              <span class="total-price"></span>
+            </div>
+            <button type="submit" class="pay-btn" value="Pay">
+              Pay
+            </button>
           </div>
         </div>
         <div class="cart-wrapper hidden">
