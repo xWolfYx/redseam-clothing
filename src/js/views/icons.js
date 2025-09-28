@@ -15,6 +15,7 @@ import defaultUserImg from "url:../../img/default-user-img.png";
 import xMark from "url:../../img/x-mark.svg";
 import emptyCart from "url:../../img/empty-cart.svg";
 import passwordEye from "url:../../img/password-eye.svg";
+import vector from "url:../../img/vector.svg";
 
 export {
   adjustmentsHor,
@@ -29,4 +30,5 @@ export {
   xMark,
   emptyCart,
   passwordEye,
+  vector,
 };
