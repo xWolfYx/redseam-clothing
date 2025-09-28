@@ -34,17 +34,16 @@ Fetches the product list from /products for logged-in users.
 Stores the token in localStorage after login/registration, so the site remembers the user.
  */
 
-export async function login(credentials) {
+export async function login(data) {
   try {
     // Check user credentials
-    const { email, password } = credentials;
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify(data),
     });
 
     // Failure
@@ -66,32 +65,25 @@ export async function login(credentials) {
   }
 }
 
-export async function register(credentials) {
+export async function register(formData) {
   try {
     // Check user credentials
-    const { email, password, password_confirmation, username } = credentials;
-    const loginRequest = await fetch(`${API_URL}/register`, {
+    const res = await fetch(`${API_URL}/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Content-Type": "multipart/form-data",
       },
 
-      body: JSON.stringify({
-        email,
-        password,
-        password_confirmation,
-        username,
-      }),
+      body: formData,
     });
 
     // Failure
-    if (!loginRequest.ok) {
-      throw new Error("Wrong credentials!");
+    if (!res.ok) {
+      throw new Error();
     }
 
     // Success
-    const userInfo = await loginRequest.json();
+    const userInfo = await res.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
     state.userInfo.userImg = userInfo.user.avatar;
