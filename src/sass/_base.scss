@@ -42,3 +42,19 @@ html {
   padding: 10px 100px;
   margin-top: 72px;
 }
+
+.error-message-div {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  background-color: colors.$red;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: ease 400ms;
+
+  span {
+    color: white;
+    font-size: 18px;
+    font-weight: 300;
+  }
+}
