@@ -197,13 +197,13 @@ class Controller {
 
   async controlRenderCheckoutContainer() {
     try {
+      checkoutView.hideCheckoutForm();
       const { isLoggedIn } = model.state;
       if (!isLoggedIn) return;
 
       const data = await model.getCartContent();
 
       if (location.hash === "#checkout") checkoutView.renderCheckoutForm(data);
-      else checkoutView.hideCheckoutForm();
     } catch (err) {
       console.log(err.message);
     }
