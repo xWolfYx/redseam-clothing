@@ -93,6 +93,13 @@ class CartView {
     itemSubtotalPriceEl.textContent = `$ ${totalItemPrice}`;
     deliveryPriceEl.textContent = `$ ${deliveryPrice}`;
     totalPriceEl.textContent = `$ ${totalItemPrice + deliveryPrice}`;
+    goToCheckoutBtn.addEventListener("click", () => {
+      location.hash = "#checkout";
+      this.toggleCart();
+      document.body.style.overflow = "";
+      this._parent.classList.remove("open");
+      cartWrapper.classList.add("hidden");
+    });
   }
 
   toggleCart() {
