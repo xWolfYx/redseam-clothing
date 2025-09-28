@@ -197,10 +197,6 @@ class Controller {
 
   async controlRenderCheckoutContainer() {
     try {
-      checkoutView.hideCheckoutForm();
-      const { isLoggedIn } = model.state;
-      if (!isLoggedIn) return;
-
       const data = await model.getCartContent();
 
       if (location.hash === "#checkout") checkoutView.renderCheckoutForm(data);
@@ -229,6 +225,7 @@ class Controller {
 
       if (res.message === "Checkout successful. Thank you for your purchase!") {
         checkoutView.displayCheckoutConfirm();
+        checkoutView.hideCheckoutForm();
       }
     } catch (err) {
       console.log(err.message);
