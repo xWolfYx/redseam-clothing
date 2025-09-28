@@ -12,7 +12,7 @@ class CartView {
   }
 
   addHandlerRemoveFromCart(handler) {
-    document.addEventListener("click", (e) => {
+    this._parent.addEventListener("click", (e) => {
       if (!e.target.classList.contains("cart-item-remove")) return;
 
       const itemID = e.target.closest(".cart-item").dataset.id;
@@ -24,7 +24,7 @@ class CartView {
   }
 
   addHandlerChangeItemCount(handler) {
-    document.addEventListener("click", (e) => {
+    this._parent.addEventListener("click", (e) => {
       const quantitySelector = e.target.closest(".cart-item-quantity-selector");
 
       if (!quantitySelector) return;
@@ -50,14 +50,17 @@ class CartView {
   }
 
   renderCartUI(data) {
-    const cartItemCount = document.querySelector(".cart-item-count");
-    const cartCloseBtn = document.querySelector(".cart-close-btn");
-    const cartItemsContainer = document.querySelector(".cart-items");
-    const cartPriceSummary = document.querySelector(".cart-price-summary");
-    const goToCheckoutBtn = document.querySelector(".go-to-checkout-btn");
-    const itemSubtotalPriceEl = document.querySelector(".items-subtotal-price");
-    const deliveryPriceEl = document.querySelector(".delivery-price");
-    const totalPriceEl = document.querySelector(".total-price");
+    const cartWrapper = document.querySelector(".cart-wrapper");
+    const cartItemCount = this._parent.querySelector(".cart-item-count");
+    const cartCloseBtn = this._parent.querySelector(".cart-close-btn");
+    const cartItemsContainer = this._parent.querySelector(".cart-items");
+    const cartPriceSummary = this._parent.querySelector(".cart-price-summary");
+    const goToCheckoutBtn = this._parent.querySelector(".go-to-checkout-btn");
+    const itemSubtotalPriceEl = this._parent.querySelector(
+      ".items-subtotal-price",
+    );
+    const deliveryPriceEl = this._parent.querySelector(".delivery-price");
+    const totalPriceEl = this._parent.querySelector(".total-price");
 
     const totalItemPrice = data.reduce(
       (acc, item) => (acc += item.total_price),
