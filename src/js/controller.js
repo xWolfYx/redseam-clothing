@@ -197,6 +197,7 @@ class Controller {
 
   async controlRenderCheckoutContainer() {
     try {
+      if (!model.state.isLoggedIn) return;
       const data = await model.getCartContent();
 
       if (location.hash === "#checkout") checkoutView.renderCheckoutForm(data);
