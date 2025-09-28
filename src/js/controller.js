@@ -102,7 +102,7 @@ class Controller {
         location.reload();
       }
     } catch (err) {
-      console.log(err);
+      loginView.displayErrorMsg(err);
     }
   }
 
