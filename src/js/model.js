@@ -35,65 +35,65 @@ Stores the token in localStorage after login/registration, so the site remembers
  */
 
 export async function login(data) {
-  try {
-    // Check user credentials
-    const res = await fetch(`${API_URL}/login`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  // Check user credentials
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-    // Failure
-    if (!res.ok) {
-      throw new Error("Wrong credentials!");
-    }
+  // Failure;
+  if (!res.ok) {
+    let errorMsg = "Unexpected Error";
+    if (res.status === 401) errorMsg = "Wrong credentials!";
+    if (res.status === 422) errorMsg = "Please fill out all data";
 
-    // Success
-    const userInfo = await res.json();
-
-    localStorage.setItem("redberryAuthentication", userInfo.token);
-    state.userInfo.userImg = userInfo.user.avatar;
-
-    localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
-
-    return res;
-  } catch (err) {
-    console.log(err.message);
+    throw new Error(errorMsg);
   }
+
+  // Success
+  const userInfo = await res.json();
+
+  localStorage.setItem("redberryAuthentication", userInfo.token);
+  state.userInfo.userImg = userInfo.user.avatar;
+
+  localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
+
+  return res;
 }
 
 export async function register(formData) {
-  try {
-    // Check user credentials
-    const res = await fetch(`${API_URL}/register`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
+  // Check user credentials
+  const res = await fetch(`${API_URL}/register`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+    },
 
-      body: formData,
-    });
+    body: formData,
+  });
 
-    // Failure
-    if (!res.ok) {
-      throw new Error();
-    }
+  // Failure
+  if (!res.ok) {
+    let errorMsg = "Unexpected Error";
+    if (res.status === 401) errorMsg = "Wrong credentials!";
+    if (res.status === 422) errorMsg = "Please fill out all data";
 
-    // Success
-    const userInfo = await res.json();
-
-    localStorage.setItem("redberryAuthentication", userInfo.token);
-    state.userInfo.userImg = userInfo.user.avatar;
-
-    localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
-
-    return res;
-  } catch (err) {
-    console.log(err.message);
+    throw new Error(errorMsg);
   }
+
+  // Success
+  const userInfo = await res.json();
+
+  localStorage.setItem("redberryAuthentication", userInfo.token);
+  state.userInfo.userImg = userInfo.user.avatar;
+
+  localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
+
+  return res;
 }
 
 export async function fetchProducts() {
