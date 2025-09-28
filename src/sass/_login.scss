@@ -17,3 +17,25 @@
 .login-img {
   height: calc(100vh - 80px);
 }
+
+.avatar-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-direction: row;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .user-img-upload,
+  .remove-user-img {
+    cursor: pointer;
+  }
+
+  .user-profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+}

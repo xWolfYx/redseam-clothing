@@ -29,10 +29,40 @@ class LoginView extends View {
   addHandlerSubmitForm(handler) {
     window.addEventListener("submit", (e) => {
       e.preventDefault();
-      const dataArr = new FormData(e.target);
-      const data = Object.fromEntries(dataArr);
-      handler(data);
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      if (location.hash === "#login") handler(data);
+      if (location.hash === "#register") handler(formData);
     });
+  }
+
+  addHandlerSetUserImg(handler) {
+    this._parent.addEventListener("change", (e) => handler(e.target));
+  }
+
+  addHandlerRemoveUserImg(handler) {
+    this._parent.addEventListener("click", (e) => handler(e.target));
+  }
+
+  setUserImg(target) {
+    const userImgInput = target.closest(`input[type="file"]`);
+    if (userImgInput) {
+      const currentImg = target
+        .closest(".avatar-container")
+        .querySelector(".user-profile-img");
+      const file = userImgInput.files[0];
+      if (file) currentImg.src = URL.createObjectURL(file);
+    }
+  }
+
+  removeUserImg(target) {
+    if (target.closest(".remove-user-img")) {
+      const avatarContainer = target.closest(".avatar-container");
+      const userImg = avatarContainer.querySelector(".user-profile-img");
+      const fileInput = avatarContainer.querySelector(`input[type="file"]`);
+      userImg.src = icon.defaultUserImg;
+      fileInput.value = "";
+    }
   }
 
   renderForm() {
@@ -63,6 +93,12 @@ class LoginView extends View {
     return `
           <h1>Register</h1>
           <div class="input-fields">
+            <div class="avatar-container">
+              <img src="${icon.defaultUserImg}" alt="User profile image" class="user-profile-img">
+              <input type="file" name="avatar" id="avatar">
+              <label for="avatar" class="user-img-upload">Upload new</label>
+              <span class="remove-user-img">Remove</span>
+            </div>
             <input type="text" placeholder="Username" name="username" minlength="3" autocomplete="on" required>
             <input type="email" name="email" placeholder="Email" autocomplete="on" required>
             <div class="password-field">
@@ -75,7 +111,7 @@ class LoginView extends View {
             </div>
           </div>
           <div class="action-fields">
-            <input type="submit" value="Log in">
+            <input type="submit" value="Register">
             <p>Already member? <a href="#login">Log in</a></p>
           </div>`;
   }
