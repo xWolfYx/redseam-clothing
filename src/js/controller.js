@@ -13,14 +13,17 @@ class Controller {
   }
 
   #init() {
-    // const userImg = model.state;
-    const { isLoggedIn /* currentPage */ } = model.state;
-    loginView.setNavContainerContent(isLoggedIn);
+    const { isLoggedIn } = model.state;
+    const userImage = JSON.parse(localStorage.getItem(`userImg`));
+    loginView.setNavContainerContent(isLoggedIn, userImage);
     loginView.addHandlerChangeForm(this.controlForm.bind(this));
     loginView.addHandlerSubmitForm((credentials) =>
       this.controlFormSubmit(credentials),
     );
     loginView.addHandlerPasswordDisplay(this.controlPasswordDisplay);
+
+    loginView.addHandlerSetUserImg(this.controlSetUserImg.bind(this));
+    loginView.addHandlerRemoveUserImg(this.controlRemoveUserImg.bind(this));
 
     productsView.addHandlerShowProducts(
       this.renderItemCount.bind(this),
@@ -73,17 +76,33 @@ class Controller {
     loginView.togglePasswordDisplay(btn);
   }
 
-  async controlFormSubmit(credentials) {
-    if (location.hash === "#login") {
-      const res = await model.login(credentials);
-      if (res.status === 200) location.hash = "";
-      location.reload();
-    }
+  controlSetUserImg(target) {
+    loginView.setUserImg(target);
+  }
 
-    if (location.hash === "#register") {
-      const res = await model.register(credentials);
-      if (res.status === 200) location.hash = "";
-      location.reload();
+  controlRemoveUserImg(target) {
+    loginView.removeUserImg(target);
+  }
+
+  async controlFormSubmit(credentials) {
+    try {
+      if (location.hash === "#login") {
+        const res = await model.login(credentials);
+        if (res.status === 200) {
+          location.hash = "";
+          loginView.setNavContainerContent(true, model.state.userInfo.userImg);
+          location.reload();
+        }
+      }
+
+      if (location.hash === "#register") {
+        const res = await model.register(credentials);
+        console.log(res);
+        if (res.status === 200) location.hash = "";
+        location.reload();
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 

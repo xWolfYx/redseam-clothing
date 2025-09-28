@@ -15,7 +15,16 @@ export const state = {
 };
 
 function checkToken() {
-  return !!localStorage.getItem("redberryAuthentication");
+  const token = localStorage.getItem("redberryAuthentication");
+  if (token) {
+    const storedUser = localStorage.getItem("userData");
+    if (storedUser) {
+      const { userInfo, userImg } = JSON.parse(storedUser);
+      state.userInfo = userInfo;
+      state.userImg = userImg || "";
+    }
+  }
+  return !!token;
 }
 
 /*
@@ -47,6 +56,10 @@ export async function login(credentials) {
     const userInfo = await res.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
+    state.userInfo.userImg = userInfo.user.avatar;
+
+    localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
+
     return res;
   } catch (err) {
     console.log(err.message);
@@ -81,6 +94,11 @@ export async function register(credentials) {
     const userInfo = await loginRequest.json();
 
     localStorage.setItem("redberryAuthentication", userInfo.token);
+    state.userInfo.userImg = userInfo.user.avatar;
+
+    localStorage.setItem("userImg", JSON.stringify(state.userInfo.userImg));
+
+    return res;
   } catch (err) {
     console.log(err.message);
   }
