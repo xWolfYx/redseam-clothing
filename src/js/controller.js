@@ -5,6 +5,7 @@ import paginationView from "./views/paginationView.js";
 import productSettingsView from "./views/productSettingsView.js";
 import listingView from "./views/listingView.js";
 import cartView from "./views/cartView.js";
+import checkoutView from "./views/checkoutView.js";
 
 class Controller {
   constructor() {
@@ -45,6 +46,16 @@ class Controller {
     listingView.addHandlerListImgChange(this.controlListImgChange.bind(this));
     listingView.addHandlerSetItemColor(this.controlSetItemColor.bind(this));
     listingView.addHandlerSetItemSize(this.controlSetItemSize.bind(this));
+    checkoutView.addHandlerCheckoutRender(
+      this.controlRenderCheckoutContainer.bind(this),
+    );
+    checkoutView.addHandlerRemoveFromCart(
+      this.controlRemoveFromCheckoutCart.bind(this),
+    );
+    checkoutView.addHandlerChangeItemCount(
+      this.controlChangeCheckoutItemCount.bind(this),
+    );
+    checkoutView.addHandlerControlCheckout(this.controlCheckout.bind(this));
 
     if (isLoggedIn) this.controlGetCartItems();
   }
@@ -53,20 +64,27 @@ class Controller {
     const { isLoggedIn } = model.state;
     if (isLoggedIn) return;
 
-    if (location.hash === "#login" || location.hash === "#register") {
+    if (location.hash === "#login" || location.hash === "#register")
       loginView.renderForm();
-    } else {
-      loginView.hideForm();
-    }
+    else loginView.hideForm();
   }
 
   controlPasswordDisplay(btn) {
     loginView.togglePasswordDisplay(btn);
   }
 
-  controlFormSubmit(credentials) {
-    if (location.hash === "#login") model.login(credentials);
-    if (location.hash === "#register") model.register(credentials);
+  async controlFormSubmit(credentials) {
+    if (location.hash === "#login") {
+      const res = await model.login(credentials);
+      if (res.status === 200) location.hash = "";
+      location.reload();
+    }
+
+    if (location.hash === "#register") {
+      const res = await model.register(credentials);
+      if (res.status === 200) location.hash = "";
+      location.reload();
+    }
   }
 
   async renderItemCount() {
@@ -74,7 +92,7 @@ class Controller {
       if (location.hash === "#login" || location.hash === "#register") return;
       await this.#fetchAndRenderProducts();
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
@@ -177,6 +195,46 @@ class Controller {
     cartView.renderCartUI(cartItemData);
   }
 
+  async controlRenderCheckoutContainer() {
+    try {
+      const { isLoggedIn } = model.state;
+      if (!isLoggedIn) return;
+
+      const data = await model.getCartContent();
+
+      if (location.hash === "#checkout") checkoutView.renderCheckoutForm(data);
+      else checkoutView.hideCheckoutForm();
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  async controlRemoveFromCheckoutCart(id, color, size) {
+    await model.removeFromCart(id, color, size);
+    const updatedCart = await model.getCartContent();
+    cartView.renderCartUI(updatedCart);
+    checkoutView.renderCheckoutUI(updatedCart);
+  }
+
+  async controlChangeCheckoutItemCount({ id, quantity, color, size }) {
+    await model.changeItemCount(id, quantity, color, size);
+    const updatedCart = await model.getCartContent();
+    cartView.renderCartUI(updatedCart);
+    checkoutView.renderCheckoutUI(updatedCart);
+  }
+
+  async controlCheckout(data) {
+    try {
+      const res = await model.initCheckout(data);
+
+      if (res.message === "Checkout successful. Thank you for your purchase!") {
+        checkoutView.displayCheckoutConfirm();
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
   async #fetchAndRenderProducts(page = model.state.currentPage) {
     try {
       const data = await model.fetchProducts(page);
@@ -192,7 +250,7 @@ class Controller {
       productsView.renderItems(data.data);
       paginationView.renderPagination(lastPage, currentPage);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 }

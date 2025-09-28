@@ -178,7 +178,7 @@ export async function removeFromCart(id, color, size) {
     if (res.status === 200)
       console.log("Item successfully deleted from the cart");
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 }
 
@@ -222,6 +222,33 @@ export async function changeItemCount(id, quantity, color, size) {
     });
 
     if (!res.ok) throw new Error("Couldn't update cart items");
+
+    const response = await res.json();
+
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function initCheckout(data) {
+  try {
+    if (!state.isLoggedIn) return;
+
+    const token = localStorage.getItem("redberryAuthentication");
+
+    const res = await fetch(`${API_URL}/cart/checkout`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error("Couldn't initialize purchase");
 
     const response = await res.json();
 
