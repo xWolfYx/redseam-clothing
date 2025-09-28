@@ -226,6 +226,7 @@ class Controller {
       if (res.message === "Checkout successful. Thank you for your purchase!") {
         checkoutView.displayCheckoutConfirm();
         checkoutView.hideCheckoutForm();
+        cartView.renderCartUI();
       }
     } catch (err) {
       console.log(err.message);
